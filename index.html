@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iris — Projects</title>
+  <meta name="description" content="A collection of projects by Iris.">
+  <link rel="canonical" href="https://elyon-advisory.co/">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f7f4;
+      --fg: #1a1916;
+      --muted: #9a9690;
+      --accent: #2a2a2a;
+      --line: rgba(26,25,22,0.1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 16px; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── CURSOR DOT ── */
+    .cursor {
+      width: 6px; height: 6px;
+      background: var(--fg);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease;
+      transform: translate(-50%, -50%);
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--line);
+      animation: fadeIn 1s ease both;
+    }
+
+    .site-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--fg);
+    }
+
+    .site-name em {
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    .header-right {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 8rem 4rem 6rem;
+      max-width: 900px;
+      animation: fadeUp 1s 0.2s ease both;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--muted);
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--fg);
+      margin-bottom: 2.5rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 480px;
+      font-weight: 300;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      margin: 0 4rem;
+      border: none;
+      border-top: 1px solid var(--line);
+      animation: fadeIn 1s 0.4s ease both;
+    }
+
+    /* ── PROJECTS ── */
+    .projects {
+      padding: 5rem 4rem;
+      flex: 1;
+      animation: fadeUp 1s 0.4s ease both;
+    }
+
+    .projects-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3rem;
+    }
+
+    .project-list { list-style: none; }
+
+    .project-item {
+      border-top: 1px solid var(--line);
+    }
+
+    .project-item:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .project-link {
+      display: grid;
+      grid-template-columns: 3rem 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 0;
+      text-decoration: none;
+      color: inherit;
+      transition: padding-left 0.3s ease;
+      position: relative;
+    }
+
+    .project-link:hover {
+      padding-left: 0.5rem;
+    }
+
+    .project-link:hover .project-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .project-link:hover .project-title {
+      color: var(--fg);
+    }
+
+    .project-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .project-info { }
+
+    .project-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 300;
+      color: var(--fg);
+      letter-spacing: 0.01em;
+      margin-bottom: 0.3rem;
+      transition: color 0.2s;
+    }
+
+    .project-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      font-weight: 400;
+    }
+
+    .project-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    .project-tag {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      padding: 0.3rem 0.8rem;
+      border-radius: 2rem;
+    }
+
+    .project-arrow {
+      font-size: 1.2rem;
+      color: var(--fg);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: all 0.3s ease;
+    }
+
+    /* Coming soon card */
+    .project-link.soon {
+      opacity: 0.4;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem 4rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeIn 1s 0.6s ease both;
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .footer-dot {
+      width: 5px; height: 5px;
+      background: var(--muted);
+      border-radius: 50%;
+      opacity: 0.4;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      header { padding: 2rem; }
+      .hero { padding: 5rem 2rem 4rem; }
+      .divider { margin: 0 2rem; }
+      .projects { padding: 4rem 2rem; }
+      footer { padding: 2rem; flex-direction: column; gap: 1rem; }
+      .project-link {
+        grid-template-columns: 2rem 1fr;
+        gap: 1rem;
+      }
+      .project-meta { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <header>
+    <div class="site-name">Iris <em>/ works</em></div>
+    <div class="header-right">elyon-advisory.co</div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-eyebrow">Hello</div>
+    <h1>Building things<br>with <em>curiosity</em><br>& AI.</h1>
+    <p class="hero-sub">Welcome to my little corner of experiments.<br>Every idea here is shaped by human instinct, a little <em>AI magic</em>, and a lot of "let's just try it."</p>
+  </section>
+
+  <hr class="divider">
+
+  <section class="projects">
+    <div class="projects-label">Projects</div>
+    <ul class="project-list">
+
+      <li class="project-item">
+        <a href="./landie-recipe/index.html" class="project-link">
+          <span class="project-number">01</span>
+          <div class="project-info">
+            <div class="project-title">Landie-Recipe</div>
+            <div class="project-desc">Interactive AI-powered recipe collection</div>
+          </div>
+          <div class="project-meta">
+            <span class="project-tag">Live</span>
+            <span class="project-arrow">→</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="project-item">
+        <a class="project-link soon">
+          <span class="project-number">02</span>
+          <div class="project-info">
+            <div class="project-title">Next Project</div>
+            <div class="project-desc">Something new is in the works</div>
+          </div>
+          <div class="project-meta">
+            <span class="project-tag">Soon</span>
+          </div>
+        </a>
+      </li>
+
+    </ul>
+  </section>
+
+  <footer>
+    <p>© 2026 Iris</p>
+    <div class="footer-dot"></div>
+    <p>elyon-advisory.co</p>
+  </footer>
+
+  <script>
+    // Subtle cursor follower
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+  </script>
+
+</body>
+</html>
