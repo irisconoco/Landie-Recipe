@@ -100,22 +100,40 @@
   .lang-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
   .lang-opt { opacity: 0.45; transition: all 0.2s; }
   .lang-opt.active { opacity: 1; color: var(--brown); font-weight: 600; }
-  .font-ctrl {
+  /* ── FONT SIZE PILL (floating, bottom-right) ── */
+  .font-pill {
+    position: fixed; bottom: 28px; right: 20px; z-index: 998;
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    filter: drop-shadow(0 4px 16px rgba(92,64,51,0.15));
+  }
+  .font-pill-label {
+    font-family: 'Noto Sans TC', sans-serif; font-size: 10px;
+    color: var(--text-muted); letter-spacing: 0.05em;
+  }
+  .font-pill-ctrl {
     display: flex; align-items: center;
-    background: var(--card-bg); border: 1px solid var(--oat-light); border-radius: 100px;
-    overflow: hidden; box-shadow: 0 1px 6px rgba(92,64,51,0.07);
+    background: var(--card-bg); border: 1.5px solid var(--oat-light); border-radius: 100px;
+    overflow: hidden;
   }
-  .font-btn {
-    display: flex; align-items: baseline; justify-content: center;
-    padding: 7px 11px; border: none; background: transparent;
-    color: var(--text-muted); font-family: 'Noto Sans TC', sans-serif;
-    font-weight: 500; cursor: pointer; transition: all 0.2s; line-height: 1;
+  .font-pill-btn {
+    display: flex; align-items: center; justify-content: center; gap: 1px;
+    width: 54px; height: 54px; border: none; background: transparent;
+    cursor: pointer; transition: background 0.18s, color 0.18s;
+    color: var(--text-light); font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500; line-height: 1;
   }
-  .font-btn:hover { background: var(--oat-light); color: var(--brown); }
-  .font-btn + .font-btn { border-left: 1px solid var(--oat-light); }
-  .font-btn.at-limit { opacity: 0.28; pointer-events: none; }
-  .font-btn .fa { font-size: 14px; }
-  .font-btn .fs { font-size: 9px; font-weight: 700; color: var(--oat); vertical-align: super; margin-left: 1px; }
+  .font-pill-btn:hover:not(:disabled) { background: var(--oat-light); color: var(--brown); }
+  .font-pill-btn:disabled { opacity: 0.22; cursor: not-allowed; }
+  .font-pill-btn .fpb-s { font-size: 9px; font-weight: 700; color: var(--oat); vertical-align: super; }
+  .font-pill-dots {
+    display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 10px;
+    border-left: 1px solid var(--oat-light); border-right: 1px solid var(--oat-light);
+  }
+  .font-dot {
+    width: 5px; height: 5px; border-radius: 50%; background: var(--oat-light);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .font-dot.active { background: var(--oat); transform: scale(1.3); }
 
   /* ── HERO ── */
   .hero {
@@ -621,16 +639,27 @@
   .step-diff-pill.easy      { background: #e8f8f0; color: #2d8a5e; }
   .step-diff-pill.watch-out { background: #fef3de; color: #b07a1a; }
   .step-diff-pill.tricky    { background: #fdecea; color: #b94534; }
-  .step-diff-pill::after {
-    content: attr(data-tip);
-    position: absolute; bottom: calc(100% + 6px); right: 0;
+  /* tooltip is now JS-driven (#diff-tip-popup) — pseudo-element removed */
+  .step-diff-pill { cursor: help; }
+
+  #diff-tip-popup {
+    position: fixed; z-index: 9999;
     background: var(--brown); color: #fff;
-    font-size: 11px; font-weight: 400; padding: 6px 10px;
-    border-radius: 8px; white-space: normal; width: 180px;
-    opacity: 0; pointer-events: none; transition: opacity 0.2s;
-    line-height: 1.5; z-index: 10;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 12px; font-weight: 400; line-height: 1.6;
+    padding: 9px 13px; border-radius: 10px;
+    max-width: 210px; white-space: normal;
+    pointer-events: none;
+    opacity: 0; transition: opacity 0.18s;
+    box-shadow: 0 4px 16px rgba(92,64,51,0.25);
   }
-  .step-diff-pill:hover::after { opacity: 1; }
+  #diff-tip-popup.visible { opacity: 1; }
+  #diff-tip-popup::after {
+    content: '';
+    position: absolute; top: 100%; right: 18px;
+    border: 6px solid transparent;
+    border-top-color: var(--brown);
+  }
 
   /* ── I MADE THIS ── */
   .made-section { text-align: center; margin: 28px 0; }
@@ -664,6 +693,7 @@
   @media print {
     body:not(.printing-shopping) .recipe-nav,
     body:not(.printing-shopping) .util-bar,
+    .font-pill,
     body:not(.printing-shopping) .control-panel,
     body:not(.printing-shopping) .shop-entry-btn,
     body:not(.printing-shopping) .shop-generate-btn,
@@ -683,7 +713,7 @@
     body:not(.printing-shopping) .step-card { box-shadow: none !important; break-inside: avoid; border: 1px solid #eee !important; }
     body:not(.printing-shopping) .ingredients-card { box-shadow: none !important; }
     body:not(.printing-shopping) .sub-btn { display: none !important; }
-    body:not(.printing-shopping) .step-diff-pill::after { display: none !important; }
+    #diff-tip-popup { display: none !important; }
     body.printing-shopping * { visibility: hidden; }
     body.printing-shopping .print-area,
     body.printing-shopping .print-area * { visibility: visible; }
@@ -1179,10 +1209,6 @@
         <span id="lang-opt-en" class="lang-opt">EN</span>
       </span>
     </button>
-    <div class="font-ctrl">
-      <button class="font-btn" id="font-dec" onclick="changeFontSize(-1)" title="縮小字體"><span class="fa">A</span><span class="fs">−</span></button>
-      <button class="font-btn" id="font-inc" onclick="changeFontSize(1)" title="放大字體"><span class="fa">A</span><span class="fs">+</span></button>
-    </div>
     <button class="print-btn" id="print-btn" onclick="window.print()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       <span id="print-btn-label">列印食譜</span>
@@ -1552,8 +1578,8 @@ let shopMode = null; // null | 'select' | 'list'
 let haveSet = new Set();
 let shoppingChecked = new Set();
 let lang = 'zh';
-const FONT_SIZES = [0.9, 1, 1.12];
-let fontSize = 1;
+const FONT_SIZES = [1.0, 1.2, 1.4];
+let fontSize = (() => { const s = parseInt(localStorage.getItem('landie-fontsize')); return (s >= 0 && s < 3) ? s : 1; })();
 
 const BAKE_DURATIONS = { rect: 26 * 60, std: 26 * 60, mini: 18 * 60 };
 const TIMERS = {
@@ -1582,13 +1608,21 @@ function toggleLang() {
 function changeFontSize(dir) {
   fontSize = Math.max(0, Math.min(FONT_SIZES.length - 1, fontSize + dir));
   document.body.style.zoom = FONT_SIZES[fontSize];
+  localStorage.setItem('landie-fontsize', fontSize);
   updateFontBtns();
 }
 
 function updateFontBtns() {
-  document.getElementById('font-dec').classList.toggle('at-limit', fontSize === 0);
-  document.getElementById('font-inc').classList.toggle('at-limit', fontSize === FONT_SIZES.length - 1);
+  document.getElementById('font-dec').disabled = (fontSize === 0);
+  document.getElementById('font-inc').disabled = (fontSize === FONT_SIZES.length - 1);
+  for (let i = 0; i < FONT_SIZES.length; i++) {
+    const d = document.getElementById('fdot-' + i);
+    if (d) d.classList.toggle('active', i === fontSize);
+  }
 }
+
+// Apply saved font size on load
+document.body.style.zoom = FONT_SIZES[fontSize];
 
 function applyLang() {
   const isEn = lang === 'en';
@@ -1612,6 +1646,8 @@ function applyLang() {
   if (navBack) navBack.textContent = isEn ? 'All Recipes' : '所有食譜';
   const printBtnLabel = document.getElementById('print-btn-label');
   if (printBtnLabel) printBtnLabel.textContent = isEn ? 'Print Recipe' : '列印食譜';
+  const fontPillLabel = document.getElementById('font-pill-label');
+  if (fontPillLabel) fontPillLabel.textContent = isEn ? 'Text Size' : '字體大小';
   updateKeyStatus();
   updateMadeBtn();
 }
@@ -2524,6 +2560,72 @@ updateMadeBtn();
   });
   document.addEventListener('scroll', hide, true);
 })();
+
+// ── STEP DIFFICULTY TOOLTIP (JS-driven, immune to overflow:hidden) ──
+(function() {
+  const popup = document.createElement('div');
+  popup.id = 'diff-tip-popup';
+  document.body.appendChild(popup);
+  let hideTimer;
+
+  function showTip(pill) {
+    const tip = pill.dataset.tip;
+    if (!tip) return;
+    clearTimeout(hideTimer);
+    popup.textContent = tip;
+    popup.style.opacity = '0';
+    popup.style.display = 'block';
+    // Position: above the pill, right-aligned
+    const rect = pill.getBoundingClientRect();
+    const zoom = parseFloat(document.body.style.zoom) || 1;
+    requestAnimationFrame(() => {
+      const ph = popup.offsetHeight;
+      const pw = popup.offsetWidth;
+      let top = rect.top - ph - 10;
+      let left = rect.right - pw;
+      // Keep inside viewport
+      if (left < 8) left = 8;
+      if (top < 8) top = rect.bottom + 10; // flip below if not enough space above
+      popup.style.top  = top  + 'px';
+      popup.style.left = left + 'px';
+      // Flip arrow if tooltip moved below
+      popup.style.setProperty('--arrow-top', top < rect.top ? '100%' : '0%');
+      popup.classList.add('visible');
+    });
+  }
+
+  function hideTip() {
+    popup.classList.remove('visible');
+    hideTimer = setTimeout(() => { popup.style.display = 'none'; }, 200);
+  }
+
+  // Desktop: hover
+  document.addEventListener('mouseover', e => {
+    const pill = e.target.closest('.step-diff-pill');
+    if (pill) showTip(pill);
+  });
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest('.step-diff-pill')) hideTip();
+  });
+
+  // Mobile: tap to toggle
+  document.addEventListener('click', e => {
+    const pill = e.target.closest('.step-diff-pill');
+    if (pill) {
+      if (popup.classList.contains('visible') && popup.textContent === pill.dataset.tip) {
+        hideTip();
+      } else {
+        showTip(pill);
+      }
+      e.stopPropagation();
+      return;
+    }
+    if (!e.target.closest('#diff-tip-popup')) hideTip();
+  });
+
+  // Hide on scroll
+  document.addEventListener('scroll', hideTip, true);
+})();
 </script>
 
 <!-- GLOSSARY TOOLTIP -->
@@ -2554,6 +2656,24 @@ updateMadeBtn();
     </div>
     <div class="timer-fs-msg visible" id="timer-fs-msg"></div>
     <button class="timer-fs-cancel" id="timer-fs-cancel-btn" onclick="cancelFromFullscreen()">取消計時</button>
+  </div>
+</div>
+
+<!-- FONT SIZE PILL -->
+<div class="font-pill" id="font-pill">
+  <span class="font-pill-label" id="font-pill-label">字體大小</span>
+  <div class="font-pill-ctrl">
+    <button class="font-pill-btn" id="font-dec" onclick="changeFontSize(-1)" aria-label="縮小字體">
+      <span style="font-size:13px">A</span><span class="fpb-s">−</span>
+    </button>
+    <div class="font-pill-dots">
+      <span class="font-dot" id="fdot-0"></span>
+      <span class="font-dot" id="fdot-1"></span>
+      <span class="font-dot" id="fdot-2"></span>
+    </div>
+    <button class="font-pill-btn" id="font-inc" onclick="changeFontSize(1)" aria-label="放大字體">
+      <span style="font-size:19px">A</span><span class="fpb-s">+</span>
+    </button>
   </div>
 </div>
 

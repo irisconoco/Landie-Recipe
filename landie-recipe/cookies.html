@@ -98,22 +98,40 @@
   .lang-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
   .lang-opt { opacity: 0.45; transition: all 0.2s; }
   .lang-opt.active { opacity: 1; color: var(--brown); font-weight: 600; }
-  .font-ctrl {
+  /* ── FONT SIZE PILL (floating, bottom-right) ── */
+  .font-pill {
+    position: fixed; bottom: 28px; right: 20px; z-index: 998;
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    filter: drop-shadow(0 4px 16px rgba(92,64,51,0.15));
+  }
+  .font-pill-label {
+    font-family: 'Noto Sans TC', sans-serif; font-size: 10px;
+    color: var(--text-muted); letter-spacing: 0.05em;
+  }
+  .font-pill-ctrl {
     display: flex; align-items: center;
-    background: var(--card-bg); border: 1px solid var(--oat-light); border-radius: 100px;
-    overflow: hidden; box-shadow: 0 1px 6px rgba(92,64,51,0.07);
+    background: var(--card-bg); border: 1.5px solid var(--oat-light); border-radius: 100px;
+    overflow: hidden;
   }
-  .font-btn {
-    display: flex; align-items: baseline; justify-content: center;
-    padding: 7px 11px; border: none; background: transparent;
-    color: var(--text-muted); font-family: 'Noto Sans TC', sans-serif;
-    font-weight: 500; cursor: pointer; transition: all 0.2s; line-height: 1;
+  .font-pill-btn {
+    display: flex; align-items: center; justify-content: center; gap: 1px;
+    width: 54px; height: 54px; border: none; background: transparent;
+    cursor: pointer; transition: background 0.18s, color 0.18s;
+    color: var(--text-light); font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500; line-height: 1;
   }
-  .font-btn:hover { background: var(--oat-light); color: var(--brown); }
-  .font-btn + .font-btn { border-left: 1px solid var(--oat-light); }
-  .font-btn.at-limit { opacity: 0.28; pointer-events: none; }
-  .font-btn .fa { font-size: 14px; }
-  .font-btn .fs { font-size: 9px; font-weight: 700; color: var(--oat); vertical-align: super; margin-left: 1px; }
+  .font-pill-btn:hover:not(:disabled) { background: var(--oat-light); color: var(--brown); }
+  .font-pill-btn:disabled { opacity: 0.22; cursor: not-allowed; }
+  .font-pill-btn .fpb-s { font-size: 9px; font-weight: 700; color: var(--oat); vertical-align: super; }
+  .font-pill-dots {
+    display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 10px;
+    border-left: 1px solid var(--oat-light); border-right: 1px solid var(--oat-light);
+  }
+  .font-dot {
+    width: 5px; height: 5px; border-radius: 50%; background: var(--oat-light);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .font-dot.active { background: var(--oat); transform: scale(1.3); }
 
   /* ── HERO ── */
   .hero {
@@ -752,10 +770,6 @@
         <span id="lang-opt-en" class="lang-opt">EN</span>
       </span>
     </button>
-    <div class="font-ctrl">
-      <button class="font-btn" id="font-dec" onclick="changeFontSize(-1)" title="縮小字體"><span class="fa">A</span><span class="fs">−</span></button>
-      <button class="font-btn" id="font-inc" onclick="changeFontSize(1)" title="放大字體"><span class="fa">A</span><span class="fs">+</span></button>
-    </div>
   </div>
 
   <!-- HERO -->
@@ -962,8 +976,8 @@ let shopMode = null;
 let haveSet = new Set();
 let shoppingChecked = new Set();
 let lang = 'zh';
-const FONT_SIZES = [0.9, 1, 1.12];
-let fontSize = 1;
+const FONT_SIZES = [1.0, 1.2, 1.4];
+let fontSize = (() => { const s = parseInt(localStorage.getItem('landie-fontsize')); return (s >= 0 && s < 3) ? s : 1; })();
 
 const BAKE_DURATIONS = { cookie: 15 * 60 };
 const TIMERS = {
@@ -990,13 +1004,21 @@ function toggleLang() {
 function changeFontSize(dir) {
   fontSize = Math.max(0, Math.min(FONT_SIZES.length - 1, fontSize + dir));
   document.body.style.zoom = FONT_SIZES[fontSize];
+  localStorage.setItem('landie-fontsize', fontSize);
   updateFontBtns();
 }
 
 function updateFontBtns() {
-  document.getElementById('font-dec').classList.toggle('at-limit', fontSize === 0);
-  document.getElementById('font-inc').classList.toggle('at-limit', fontSize === FONT_SIZES.length - 1);
+  document.getElementById('font-dec').disabled = (fontSize === 0);
+  document.getElementById('font-inc').disabled = (fontSize === FONT_SIZES.length - 1);
+  for (let i = 0; i < FONT_SIZES.length; i++) {
+    const d = document.getElementById('fdot-' + i);
+    if (d) d.classList.toggle('active', i === fontSize);
+  }
 }
+
+// Apply saved font size on load
+document.body.style.zoom = FONT_SIZES[fontSize];
 
 function applyLang() {
   const isEn = lang === 'en';
@@ -1018,6 +1040,8 @@ function applyLang() {
   if (uploadSub) uploadSub.textContent = isEn ? 'AI analysis with encouragement · JPG / PNG' : 'AI 自動分析並給予鼓勵 · JPG / PNG';
   const navBack = document.getElementById('nav-back-label');
   if (navBack) navBack.textContent = isEn ? 'All Recipes' : '所有食譜';
+  const fontPillLabel = document.getElementById('font-pill-label');
+  if (fontPillLabel) fontPillLabel.textContent = isEn ? 'Text Size' : '字體大小';
   updateKeyStatus();
 }
 
@@ -1806,6 +1830,24 @@ updateKeyStatus();
     </div>
     <div class="timer-fs-msg visible" id="timer-fs-msg"></div>
     <button class="timer-fs-cancel" id="timer-fs-cancel-btn" onclick="cancelFromFullscreen()">取消計時</button>
+  </div>
+</div>
+
+<!-- FONT SIZE PILL -->
+<div class="font-pill" id="font-pill">
+  <span class="font-pill-label" id="font-pill-label">字體大小</span>
+  <div class="font-pill-ctrl">
+    <button class="font-pill-btn" id="font-dec" onclick="changeFontSize(-1)" aria-label="縮小字體">
+      <span style="font-size:13px">A</span><span class="fpb-s">−</span>
+    </button>
+    <div class="font-pill-dots">
+      <span class="font-dot" id="fdot-0"></span>
+      <span class="font-dot" id="fdot-1"></span>
+      <span class="font-dot" id="fdot-2"></span>
+    </div>
+    <button class="font-pill-btn" id="font-inc" onclick="changeFontSize(1)" aria-label="放大字體">
+      <span style="font-size:19px">A</span><span class="fpb-s">+</span>
+    </button>
   </div>
 </div>
 
