@@ -1,0 +1,48 @@
+[
+  {
+    "slug": "muffins",
+    "file": "muffins.html",
+    "emoji": "🧁",
+    "name": {
+      "zh": "香蕉燕麥馬芬",
+      "en": "Banana Oat Muffins"
+    },
+    "category": "baking",
+    "difficulty": "easy",
+    "prepTime": 10,
+    "bakeTime": "18–26",
+    "totalTime": 36,
+    "description": {
+      "zh": "熟透香蕉搭配燕麥，無精製糖，鬆軟健康，冷凍保存三個月。初學者最友善的烘焙入門款。",
+      "en": "Ripe bananas and oats with no refined sugar. Soft, wholesome, and freezer-friendly for up to 3 months. The most beginner-friendly bake to start with."
+    },
+    "tags": ["no-refined-sugar", "freezer-friendly", "kid-friendly"],
+    "tagLabels": {
+      "zh": ["無精製糖", "可冷凍", "親子友善"],
+      "en": ["No refined sugar", "Freezer-friendly", "Kid-friendly"]
+    }
+  },
+  {
+    "slug": "cookies",
+    "file": "cookies.html",
+    "emoji": "🍪",
+    "name": {
+      "zh": "杏仁薄脆餅",
+      "en": "Almond Crispy Cookies"
+    },
+    "category": "baking",
+    "difficulty": "easy",
+    "prepTime": 10,
+    "bakeTime": "15",
+    "totalTime": 25,
+    "description": {
+      "zh": "酥脆薄片、濃郁杏仁香，作法簡單，成品精緻，送禮自用兩相宜。常溫保存 2–3 週。",
+      "en": "Thin, crispy, and rich with almond flavour. Simple to make, beautiful to gift. Keeps at room temperature for 2–3 weeks."
+    },
+    "tags": ["gift-friendly", "crispy"],
+    "tagLabels": {
+      "zh": ["送禮首選", "酥脆口感"],
+      "en": ["Great for gifting", "Extra crispy"]
+    }
+  }
+]

@@ -7,30 +7,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #FAF7F2;
-    --warm-white: #FDF9F4;
-    --oat: #C4956A;
-    --oat-light: #E8D5BE;
-    --oat-dark: #9B6E47;
-    --sage: #A8B5A0;
+    --cream:      #FAF7F2;
+    --oat:        #C4956A;
+    --oat-light:  #E8D5BE;
+    --oat-dark:   #9B6E47;
+    --sage:       #A8B5A0;
     --sage-light: #D4DDCF;
-    --sage-dark: #718069;
-    --brown: #5C4033;
-    --text: #3D2B1F;
+    --brown:      #5C4033;
+    --text:       #3D2B1F;
     --text-light: #7A6054;
     --text-muted: #A89080;
-    --card-bg: #FFFFFF;
-    --shadow-soft: 0 4px 20px rgba(92,64,51,0.08);
-    --shadow-card: 0 2px 12px rgba(92,64,51,0.10);
-    --radius: 20px;
-    --radius-sm: 12px;
-    --radius-xs: 8px;
+    --card-bg:    #FFFFFF;
+    --shadow:     0 4px 20px rgba(92,64,51,0.08);
+    --radius:     20px;
+    --radius-sm:  12px;
+    --radius-xs:  8px;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background-color: var(--cream);
+    background: var(--cream);
     color: var(--text);
     font-family: 'Noto Sans TC', sans-serif;
     font-weight: 300;
@@ -40,58 +37,46 @@
 
   body::before {
     content: '';
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
     background-image:
       radial-gradient(ellipse at 20% 20%, rgba(196,149,106,0.09) 0%, transparent 55%),
       radial-gradient(ellipse at 80% 80%, rgba(168,181,160,0.09) 0%, transparent 55%),
       radial-gradient(ellipse at 60% 10%, rgba(232,213,190,0.13) 0%, transparent 45%);
-    pointer-events: none;
-    z-index: 0;
   }
 
   .container {
-    max-width: 680px;
+    max-width: 720px;
     margin: 0 auto;
     padding: 0 20px 80px;
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
   }
 
   /* ── HEADER ── */
   .site-header {
     text-align: center;
-    padding: 52px 20px 36px;
+    padding: 52px 20px 32px;
     animation: fadeDown 0.7s ease both;
   }
-
-  .logo-wrap { margin-bottom: 20px; }
-
-  .logo-wrap img {
-    max-height: 80px;
-    max-width: 200px;
-    object-fit: contain;
-  }
-
+  .logo-wrap { margin-bottom: 18px; }
+  .logo-wrap img { max-height: 80px; max-width: 200px; object-fit: contain; }
   .site-tagline {
     font-family: 'Noto Serif TC', serif;
-    font-size: 13px;
-    color: var(--text-muted);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    font-size: 12px; color: var(--text-muted);
+    letter-spacing: 0.2em; text-transform: uppercase;
   }
 
-  /* ── LANG TOGGLE ── */
+  /* ── UTIL BAR ── */
   .util-bar {
     display: flex; align-items: center; justify-content: flex-end;
-    gap: 8px; padding: 0 0 28px;
+    gap: 8px; padding: 0 0 24px;
     animation: fadeDown 0.5s ease both 0.1s;
   }
   .lang-btn {
     display: flex; align-items: center; gap: 6px; padding: 7px 14px;
     background: var(--card-bg); border: 1px solid var(--oat-light); border-radius: 100px;
     font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: var(--text-light);
-    cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 6px rgba(92,64,51,0.07); white-space: nowrap;
+    cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 6px rgba(92,64,51,0.07);
+    white-space: nowrap;
   }
   .lang-btn:hover { color: var(--brown); border-color: var(--oat); background: var(--oat-light); }
   .lang-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
@@ -114,162 +99,193 @@
   .font-btn .fa { font-size: 14px; }
   .font-btn .fs { font-size: 9px; font-weight: 700; color: var(--oat); vertical-align: super; margin-left: 1px; }
 
-  /* ── SECTION LABEL ── */
+  /* ── FILTER BAR ── */
+  .filter-section {
+    margin-bottom: 24px;
+    animation: fadeUp 0.5s ease both 0.15s;
+  }
+  .filter-row {
+    display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap; margin-bottom: 8px;
+  }
+  .filter-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-muted);
+    white-space: nowrap; min-width: 40px;
+  }
+  .filter-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .filter-pill {
+    padding: 5px 14px;
+    border: 1.5px solid var(--oat-light);
+    border-radius: 100px;
+    background: var(--card-bg);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 12px; color: var(--text-light);
+    cursor: pointer; transition: all 0.18s;
+    white-space: nowrap;
+    box-shadow: 0 1px 4px rgba(92,64,51,0.05);
+  }
+  .filter-pill:hover { border-color: var(--oat); color: var(--brown); }
+  .filter-pill.active {
+    background: var(--oat);
+    border-color: var(--oat);
+    color: #fff;
+    font-weight: 500;
+    box-shadow: 0 2px 10px rgba(196,149,106,0.3);
+  }
+  .filter-pill[data-diff="easy"].active   { background: #4caf82; border-color: #4caf82; }
+  .filter-pill[data-diff="medium"].active { background: var(--oat); border-color: var(--oat); }
+  .filter-pill[data-diff="hard"].active   { background: #d4724a; border-color: #d4724a; }
+
+  /* ── RESULTS BAR ── */
+  .results-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+    animation: fadeUp 0.5s ease both 0.2s;
+  }
   .section-label {
     font-family: 'Noto Serif TC', serif;
     font-size: 12px; font-weight: 600; letter-spacing: 0.18em;
     text-transform: uppercase; color: var(--oat-dark);
-    margin-bottom: 18px;
     display: flex; align-items: center; gap: 10px;
   }
   .section-label::after {
-    content: ''; flex: 1; height: 1px;
+    content: ''; width: 40px; height: 1px;
     background: linear-gradient(90deg, var(--oat-light), transparent);
   }
+  .results-count { font-size: 12px; color: var(--text-muted); font-style: italic; }
 
-  /* ── RECIPE CARDS ── */
+  /* ── RECIPE GRID ── */
   .recipe-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+    display: flex; flex-direction: column; gap: 16px;
+    animation: fadeUp 0.5s ease both 0.2s;
   }
 
+  /* ── RECIPE CARD ── */
   .recipe-card {
-    display: block;
-    text-decoration: none;
+    display: block; text-decoration: none;
     background: var(--card-bg);
     border-radius: var(--radius);
-    box-shadow: var(--shadow-soft);
+    box-shadow: var(--shadow);
     border: 1.5px solid transparent;
     overflow: hidden;
-    transition: all 0.28s ease;
-    animation: fadeUp 0.6s ease both;
+    transition: all 0.26s ease;
     position: relative;
   }
-
-  .recipe-card:nth-child(2) { animation-delay: 0.12s; }
-
   .recipe-card:hover {
     border-color: var(--oat-light);
     box-shadow: 0 10px 40px rgba(92,64,51,0.14);
     transform: translateY(-3px);
   }
-
-  .recipe-card-inner {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 24px 22px;
-  }
-
-  .recipe-emoji-wrap {
-    width: 72px; height: 72px; flex-shrink: 0;
-    background: linear-gradient(135deg, var(--oat-light), var(--sage-light));
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 34px;
-    box-shadow: 0 4px 14px rgba(196,149,106,0.25);
-    transition: transform 0.28s ease;
-  }
-
-  .recipe-card:hover .recipe-emoji-wrap {
-    transform: scale(1.07) rotate(-3deg);
-  }
-
-  .recipe-card-body { flex: 1; min-width: 0; }
-
-  .recipe-card-name {
-    font-family: 'Playfair Display', 'Noto Serif TC', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--brown);
-    line-height: 1.2;
-    margin-bottom: 4px;
-  }
-
-  .recipe-card-sub {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 12px;
-    color: var(--text-muted);
-    letter-spacing: 0.06em;
-    font-style: italic;
-    margin-bottom: 12px;
-  }
-
-  .recipe-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .recipe-chip {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 4px 10px;
-    background: var(--cream);
-    border-radius: 100px;
-    font-size: 11px;
-    color: var(--text-light);
-    border: 1px solid var(--oat-light);
-  }
-
-  .recipe-chip strong { color: var(--oat-dark); font-weight: 600; }
-
-  .recipe-card-arrow {
-    color: var(--oat-light);
-    flex-shrink: 0;
-    transition: all 0.25s ease;
-  }
-
-  .recipe-card:hover .recipe-card-arrow {
-    color: var(--oat);
-    transform: translateX(4px);
-  }
-
-  .recipe-card-arrow svg { width: 20px; height: 20px; display: block; }
-
   .recipe-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
     background: linear-gradient(90deg, var(--oat-light), var(--sage-light));
-    opacity: 0;
-    transition: opacity 0.28s;
+    opacity: 0; transition: opacity 0.26s;
   }
   .recipe-card:hover::before { opacity: 1; }
 
+  .recipe-card-inner {
+    display: flex; align-items: center;
+    gap: 18px; padding: 22px 20px;
+  }
+
+  .recipe-emoji-wrap {
+    width: 68px; height: 68px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--oat-light), var(--sage-light));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 4px 14px rgba(196,149,106,0.22);
+    transition: transform 0.26s ease;
+    position: relative;
+  }
+  .recipe-card:hover .recipe-emoji-wrap { transform: scale(1.06) rotate(-3deg); }
+
+  .made-overlay {
+    display: none; position: absolute; inset: 0;
+    background: rgba(76,175,130,0.85);
+    border-radius: 50%;
+    align-items: center; justify-content: center;
+    font-size: 24px; color: #fff;
+  }
+  .made-overlay.visible { display: flex; }
+
+  .recipe-card-body { flex: 1; min-width: 0; }
+  .recipe-card-name {
+    font-family: 'Playfair Display', 'Noto Serif TC', serif;
+    font-size: 20px; font-weight: 700; color: var(--brown);
+    line-height: 1.2; margin-bottom: 3px;
+  }
+  .recipe-card-sub {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 12px; color: var(--text-muted);
+    letter-spacing: 0.05em; font-style: italic; margin-bottom: 10px;
+  }
+
+  .badge-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 9px; }
+  .diff-badge {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 3px 9px; border-radius: 100px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+  }
+  .diff-badge.easy   { background: #e8f8f0; color: #2d8a5e; }
+  .diff-badge.medium { background: #fef3de; color: #b07a1a; }
+  .diff-badge.hard   { background: #fdecea; color: #b94534; }
+  .diff-badge.made   { background: #e8f8f0; color: #2d8a5e; }
+
+  .cat-badge {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 3px 9px; border-radius: 100px;
+    font-size: 11px; font-weight: 500;
+    background: var(--cream); color: var(--oat-dark);
+    border: 1px solid var(--oat-light);
+  }
+
+  .recipe-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .recipe-chip {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 3px 9px; border-radius: 100px;
+    font-size: 11px; color: var(--text-light);
+    background: var(--cream); border: 1px solid var(--oat-light);
+  }
+  .recipe-chip strong { color: var(--oat-dark); font-weight: 600; }
+
+  .recipe-card-arrow {
+    color: var(--oat-light); flex-shrink: 0;
+    transition: all 0.22s ease;
+  }
+  .recipe-card:hover .recipe-card-arrow { color: var(--oat); transform: translateX(4px); }
+  .recipe-card-arrow svg { width: 20px; height: 20px; display: block; }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    text-align: center; padding: 56px 20px; color: var(--text-muted);
+  }
+  .empty-state .empty-icon { font-size: 3rem; margin-bottom: 12px; }
+  .empty-state p { font-size: 14px; line-height: 1.7; }
+
   /* ── FOOTER ── */
   .home-footer {
-    text-align: center;
-    margin-top: 48px;
-    font-size: 12px;
-    color: var(--text-muted);
+    text-align: center; margin-top: 48px;
+    font-size: 12px; color: var(--text-muted);
     animation: fadeUp 0.6s ease both 0.3s;
   }
 
   /* ── ANIMATIONS ── */
   @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(-18px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes bounceIn {
-    0% { transform: scale(0.5); opacity: 0; }
-    70% { transform: scale(1.15); }
-    100% { transform: scale(1); opacity: 1; }
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
-    .recipe-card-inner { padding: 18px 16px; gap: 14px; }
-    .recipe-emoji-wrap { width: 60px; height: 60px; font-size: 28px; }
-    .recipe-card-name { font-size: 19px; }
-  }
-  @media (min-width: 901px) {
-    .container { padding: 0 24px 80px; }
+    .recipe-card-inner { padding: 16px 14px; gap: 12px; }
+    .recipe-emoji-wrap { width: 56px; height: 56px; font-size: 26px; }
+    .recipe-card-name { font-size: 17px; }
   }
 </style>
 </head>
@@ -277,70 +293,64 @@
 
 <div class="container">
 
+  <!-- Header -->
   <div class="site-header">
-      <div class="logo-wrap">
-        <img src="logo.png" alt="Landie Recipe">
-      </div>
+    <div class="logo-wrap">
+      <img src="logo.png" alt="Landie Recipe">
+    </div>
     <p class="site-tagline" id="tagline">精選食譜 · Curated Recipes</p>
   </div>
 
+  <!-- Util bar -->
   <div class="util-bar">
-    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">
+    <button class="lang-btn" onclick="toggleLang()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-      <span id="lang-label">
+      <span>
         <span id="lang-opt-zh" class="lang-opt active">中</span>
         <span style="margin:0 4px;opacity:0.3">|</span>
         <span id="lang-opt-en" class="lang-opt">EN</span>
       </span>
     </button>
     <div class="font-ctrl">
-      <button class="font-btn" id="font-dec" onclick="changeFontSize(-1)" title="縮小字體"><span class="fa">A</span><span class="fs">−</span></button>
-      <button class="font-btn" id="font-inc" onclick="changeFontSize(1)" title="放大字體"><span class="fa">A</span><span class="fs">+</span></button>
+      <button class="font-btn" id="font-dec" onclick="changeFontSize(-1)"><span class="fa">A</span><span class="fs">−</span></button>
+      <button class="font-btn" id="font-inc" onclick="changeFontSize(1)"><span class="fa">A</span><span class="fs">+</span></button>
     </div>
   </div>
 
-  <div class="section-label" id="section-label">所有食譜 All Recipes</div>
-
-  <div class="recipe-grid">
-
-    <a class="recipe-card" href="muffins.html">
-      <div class="recipe-card-inner">
-        <div class="recipe-emoji-wrap">🧁</div>
-        <div class="recipe-card-body">
-          <div class="recipe-card-name" id="muffin-name">香蕉燕麥馬芬</div>
-          <div class="recipe-card-sub">Banana Oat Muffins</div>
-          <div class="recipe-chips">
-            <span class="recipe-chip">🕐 <strong id="muffin-prep">10 分鐘</strong></span>
-            <span class="recipe-chip">🔥 <strong id="muffin-bake">18–26 分鐘</strong></span>
-            <span class="recipe-chip">🌾 <strong id="muffin-tag">燕麥健康</strong></span>
-            <span class="recipe-chip">❄️ <strong id="muffin-store">冷凍 3 個月</strong></span>
-          </div>
-        </div>
-        <div class="recipe-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        </div>
+  <!-- Filter bar -->
+  <div class="filter-section">
+    <div class="filter-row">
+      <span class="filter-label" id="filter-label-cat">類別</span>
+      <div class="filter-pills" id="cat-pills">
+        <button class="filter-pill active" data-cat="all"    onclick="setFilter('cat','all')">全部</button>
+        <button class="filter-pill"        data-cat="baking" onclick="setFilter('cat','baking')">🔥 烘焙</button>
+        <button class="filter-pill"        data-cat="nobake" onclick="setFilter('cat','nobake')">❄️ 免烤</button>
+        <button class="filter-pill"        data-cat="savory" onclick="setFilter('cat','savory')">🧂 鹹食</button>
       </div>
-    </a>
-
-    <a class="recipe-card" href="cookies.html">
-      <div class="recipe-card-inner">
-        <div class="recipe-emoji-wrap">🍪</div>
-        <div class="recipe-card-body">
-          <div class="recipe-card-name" id="cookie-name">杏仁薄脆餅</div>
-          <div class="recipe-card-sub">Almond Crispy Cookies</div>
-          <div class="recipe-chips">
-            <span class="recipe-chip">🕐 <strong id="cookie-prep">10 分鐘</strong></span>
-            <span class="recipe-chip">🔥 <strong id="cookie-bake">15 分鐘</strong></span>
-            <span class="recipe-chip">🌰 <strong id="cookie-tag">杏仁香氣</strong></span>
-            <span class="recipe-chip">📦 <strong id="cookie-store">保存 2–3 週</strong></span>
-          </div>
-        </div>
-        <div class="recipe-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label" id="filter-label-diff">難度</span>
+      <div class="filter-pills" id="diff-pills">
+        <button class="filter-pill active" data-diff="all"    onclick="setFilter('diff','all')">全部</button>
+        <button class="filter-pill"        data-diff="easy"   onclick="setFilter('diff','easy')">🟢 簡單</button>
+        <button class="filter-pill"        data-diff="medium" onclick="setFilter('diff','medium')">🟡 中等</button>
+        <button class="filter-pill"        data-diff="hard"   onclick="setFilter('diff','hard')">🔴 進階</button>
       </div>
-    </a>
+    </div>
+  </div>
 
+  <!-- Results bar -->
+  <div class="results-bar">
+    <div class="section-label" id="section-label">所有食譜</div>
+    <div class="results-count" id="results-count"></div>
+  </div>
+
+  <!-- Recipe grid — populated by JS -->
+  <div class="recipe-grid" id="recipe-grid">
+    <div class="empty-state">
+      <div class="empty-icon">🍳</div>
+      <p id="loading-text">載入食譜中…</p>
+    </div>
   </div>
 
   <div class="home-footer" id="home-footer">Landie Recipe · 用心做，用愛分享</div>
@@ -348,43 +358,193 @@
 </div>
 
 <script>
+// ── State ──
 let lang = 'zh';
 const FONT_SIZES = [0.9, 1, 1.12];
 let fontSize = 1;
+let activeFilters = { cat: 'all', diff: 'all' };
+let recipes = [];
 
-const TEXT = {
-  tagline:      { zh:'精選食譜 · Curated Recipes',    en:'Curated Recipes · 精選食譜' },
-  sectionLabel: { zh:'所有食譜 All Recipes',           en:'All Recipes · 所有食譜' },
-  muffinName:   { zh:'香蕉燕麥馬芬',                   en:'Banana Oat Muffins' },
-  muffinPrep:   { zh:'10 分鐘',                        en:'10 min' },
-  muffinBake:   { zh:'18–26 分鐘',                    en:'18–26 min' },
-  muffinTag:    { zh:'燕麥健康',                        en:'Wholesome Oats' },
-  muffinStore:  { zh:'冷凍 3 個月',                    en:'Freeze 3 months' },
-  cookieName:   { zh:'杏仁薄脆餅',                      en:'Almond Crispy Cookies' },
-  cookiePrep:   { zh:'10 分鐘',                        en:'10 min' },
-  cookieBake:   { zh:'15 分鐘',                        en:'15 min' },
-  cookieTag:    { zh:'杏仁香氣',                        en:'Almond Aroma' },
-  cookieStore:  { zh:'保存 2–3 週',                    en:'Keeps 2–3 weeks' },
-  footer:       { zh:'Landie Recipe · 用心做，用愛分享', en:'Landie Recipe · Made with heart' },
+// ── UI strings ──
+const UI = {
+  tagline:     { zh: '精選食譜 · Curated Recipes',   en: 'Curated Recipes · 精選食譜' },
+  filterCat:   { zh: '類別',  en: 'Category' },
+  filterDiff:  { zh: '難度',  en: 'Difficulty' },
+  catAll:      { zh: '全部',  en: 'All' },
+  catBaking:   { zh: '🔥 烘焙', en: '🔥 Baking' },
+  catNobake:   { zh: '❄️ 免烤', en: '❄️ No-Bake' },
+  catSavory:   { zh: '🧂 鹹食', en: '🧂 Savory' },
+  diffAll:     { zh: '全部',    en: 'All' },
+  diffEasy:    { zh: '🟢 簡單', en: '🟢 Easy' },
+  diffMedium:  { zh: '🟡 中等', en: '🟡 Medium' },
+  diffHard:    { zh: '🔴 進階', en: '🔴 Advanced' },
+  sectionAll:      { zh: '所有食譜',  en: 'All Recipes' },
+  sectionFiltered: { zh: '篩選結果',  en: 'Filtered Results' },
+  resultCount: {
+    zh: n => `共 ${n} 道食譜`,
+    en: n => `${n} recipe${n !== 1 ? 's' : ''}`,
+  },
+  noResults:   { zh: '找不到符合條件的食譜。', en: 'No recipes match your filters.' },
+  loading:     { zh: '載入食譜中…',            en: 'Loading recipes…' },
+  prepTime:    { zh: m => `備料 ${m} 分鐘`,    en: m => `${m} min prep` },
+  bakeTime:    { zh: m => `烘烤 ${m} 分鐘`,    en: m => `${m} min bake` },
+  diffLabel: {
+    easy:   { zh: '入門',  en: 'Easy' },
+    medium: { zh: '中等',  en: 'Medium' },
+    hard:   { zh: '進階',  en: 'Advanced' },
+  },
+  catLabel: {
+    baking: { zh: '烘焙',  en: 'Baking' },
+    nobake: { zh: '免烤',  en: 'No-Bake' },
+    savory: { zh: '鹹食',  en: 'Savory' },
+  },
+  made:   { zh: '✓ 做過了',  en: '✓ Made it' },
+  footer: { zh: 'Landie Recipe · 用心做，用愛分享', en: 'Landie Recipe · Made with heart' },
 };
 
+// ── Fallback data (for file:// or offline use) ──
+const FALLBACK_RECIPES = [
+  {
+    slug: 'muffins', file: 'muffins.html', emoji: '🧁',
+    name: { zh: '香蕉燕麥馬芬', en: 'Banana Oat Muffins' },
+    category: 'baking', difficulty: 'easy', prepTime: 10, bakeTime: '18–26',
+    description: { zh: '熟透香蕉搭配燕麥，無精製糖，鬆軟健康，冷凍保存三個月。', en: 'Ripe bananas and oats, no refined sugar. Soft, wholesome, freezer-friendly.' },
+    tags: ['no-refined-sugar', 'freezer-friendly', 'kid-friendly'],
+    tagLabels: { zh: ['無精製糖', '可冷凍', '親子友善'], en: ['No refined sugar', 'Freezer-friendly', 'Kid-friendly'] },
+  },
+  {
+    slug: 'cookies', file: 'cookies.html', emoji: '🍪',
+    name: { zh: '杏仁薄脆餅', en: 'Almond Crispy Cookies' },
+    category: 'baking', difficulty: 'easy', prepTime: 10, bakeTime: '15',
+    description: { zh: '酥脆薄片、濃郁杏仁香，作法簡單，成品精緻，送禮自用兩相宜。', en: 'Thin, crispy, rich with almond flavour. Simple to make, beautiful to gift.' },
+    tags: ['gift-friendly', 'crispy'],
+    tagLabels: { zh: ['送禮首選', '酥脆口感'], en: ['Great for gifting', 'Extra crispy'] },
+  },
+];
+
+// ── "I Made This" localStorage ──
+function getMadeSet() {
+  try { return new Set(JSON.parse(localStorage.getItem('landie-made') || '[]')); }
+  catch { return new Set(); }
+}
+
+// ── Load recipes ──
+async function loadRecipes() {
+  try {
+    const res = await fetch('recipes.json');
+    if (!res.ok) throw new Error('fetch failed');
+    recipes = await res.json();
+  } catch {
+    recipes = FALLBACK_RECIPES;
+  }
+  renderGrid();
+}
+
+// ── Filter ──
+function getVisible() {
+  return recipes.filter(r => {
+    const catOk  = activeFilters.cat  === 'all' || r.category   === activeFilters.cat;
+    const diffOk = activeFilters.diff === 'all' || r.difficulty  === activeFilters.diff;
+    return catOk && diffOk;
+  });
+}
+
+function setFilter(type, value) {
+  activeFilters[type] = value;
+  const pillId = type === 'cat' ? 'cat-pills' : 'diff-pills';
+  const dataKey = type === 'cat' ? 'cat' : 'diff';
+  document.querySelectorAll(`#${pillId} .filter-pill`).forEach(p =>
+    p.classList.toggle('active', p.dataset[dataKey] === value));
+  renderGrid();
+}
+
+// ── Render ──
+function renderGrid() {
+  const grid    = document.getElementById('recipe-grid');
+  const visible = getVisible();
+  const madeSet = getMadeSet();
+  const isAll   = activeFilters.cat === 'all' && activeFilters.diff === 'all';
+
+  document.getElementById('section-label').textContent =
+    isAll ? UI.sectionAll[lang] : UI.sectionFiltered[lang];
+  document.getElementById('results-count').textContent =
+    UI.resultCount[lang](visible.length);
+
+  if (visible.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <p>${UI.noResults[lang]}</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = visible.map((r, i) => {
+    const made      = madeSet.has(r.slug);
+    const diffLabel = UI.diffLabel[r.difficulty]?.[lang] || r.difficulty;
+    const catLabel  = UI.catLabel[r.category]?.[lang]    || r.category;
+    const secName   = lang === 'zh' ? r.name.en : r.name.zh;
+    const tags      = (r.tagLabels?.[lang] || []).slice(0, 2);
+    const prepStr   = UI.prepTime[lang](r.prepTime);
+    const bakeStr   = UI.bakeTime[lang](r.bakeTime);
+
+    return `
+      <a class="recipe-card" href="${r.file}" style="animation-delay:${i * 0.08}s">
+        <div class="recipe-card-inner">
+          <div class="recipe-emoji-wrap">
+            ${r.emoji}
+            <div class="made-overlay ${made ? 'visible' : ''}">✓</div>
+          </div>
+          <div class="recipe-card-body">
+            <div class="recipe-card-name">${r.name[lang]}</div>
+            <div class="recipe-card-sub">${secName}</div>
+            <div class="badge-row">
+              <span class="diff-badge ${r.difficulty}">${diffLabel}</span>
+              <span class="cat-badge">${catLabel}</span>
+              ${made ? `<span class="diff-badge made">${UI.made[lang]}</span>` : ''}
+            </div>
+            <div class="recipe-chips">
+              <span class="recipe-chip">🕐 <strong>${prepStr}</strong></span>
+              <span class="recipe-chip">🔥 <strong>${bakeStr}</strong></span>
+              ${tags.map(t => `<span class="recipe-chip">${t}</span>`).join('')}
+            </div>
+          </div>
+          <div class="recipe-card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+      </a>`;
+  }).join('');
+}
+
+// ── Language ──
+const CAT_KEYS  = ['all', 'baking', 'nobake', 'savory'];
+const CAT_UI    = ['catAll', 'catBaking', 'catNobake', 'catSavory'];
+const DIFF_KEYS = ['all', 'easy', 'medium', 'hard'];
+const DIFF_UI   = ['diffAll', 'diffEasy', 'diffMedium', 'diffHard'];
+
 function applyLang() {
-  const t = k => TEXT[k][lang];
-  document.getElementById('tagline').textContent       = t('tagline');
-  document.getElementById('section-label').textContent = t('sectionLabel');
-  document.getElementById('muffin-name').textContent   = t('muffinName');
-  document.getElementById('muffin-prep').textContent   = t('muffinPrep');
-  document.getElementById('muffin-bake').textContent   = t('muffinBake');
-  document.getElementById('muffin-tag').textContent    = t('muffinTag');
-  document.getElementById('muffin-store').textContent  = t('muffinStore');
-  document.getElementById('cookie-name').textContent   = t('cookieName');
-  document.getElementById('cookie-prep').textContent   = t('cookiePrep');
-  document.getElementById('cookie-bake').textContent   = t('cookieBake');
-  document.getElementById('cookie-tag').textContent    = t('cookieTag');
-  document.getElementById('cookie-store').textContent  = t('cookieStore');
-  document.getElementById('home-footer').textContent   = t('footer');
-  document.getElementById('lang-opt-zh').className = lang === 'zh' ? 'lang-opt active' : 'lang-opt';
-  document.getElementById('lang-opt-en').className = lang === 'en' ? 'lang-opt active' : 'lang-opt';
+  const isEn = lang === 'en';
+  document.documentElement.lang = isEn ? 'en' : 'zh-TW';
+  document.getElementById('tagline').textContent           = UI.tagline[lang];
+  document.getElementById('filter-label-cat').textContent  = UI.filterCat[lang];
+  document.getElementById('filter-label-diff').textContent = UI.filterDiff[lang];
+  document.getElementById('home-footer').textContent       = UI.footer[lang];
+  document.getElementById('lang-opt-zh').className = isEn ? 'lang-opt' : 'lang-opt active';
+  document.getElementById('lang-opt-en').className = isEn ? 'lang-opt active' : 'lang-opt';
+
+  document.querySelectorAll('#cat-pills .filter-pill').forEach((p, i) => {
+    p.textContent    = UI[CAT_UI[i]][lang];
+    p.dataset.cat    = CAT_KEYS[i];
+    p.classList.toggle('active', CAT_KEYS[i] === activeFilters.cat);
+  });
+  document.querySelectorAll('#diff-pills .filter-pill').forEach((p, i) => {
+    p.textContent    = UI[DIFF_UI[i]][lang];
+    p.dataset.diff   = DIFF_KEYS[i];
+    p.classList.toggle('active', DIFF_KEYS[i] === activeFilters.diff);
+  });
+
+  renderGrid();
 }
 
 function toggleLang() {
@@ -392,19 +552,16 @@ function toggleLang() {
   applyLang();
 }
 
+// ── Font size ──
 function changeFontSize(dir) {
   fontSize = Math.max(0, Math.min(FONT_SIZES.length - 1, fontSize + dir));
   document.body.style.zoom = FONT_SIZES[fontSize];
-  updateFontBtns();
-}
-
-function updateFontBtns() {
   document.getElementById('font-dec').classList.toggle('at-limit', fontSize === 0);
   document.getElementById('font-inc').classList.toggle('at-limit', fontSize === FONT_SIZES.length - 1);
 }
 
-applyLang();
-updateFontBtns();
+// ── Boot ──
+loadRecipes();
 </script>
 </body>
 </html>
