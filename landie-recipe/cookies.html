@@ -775,10 +775,10 @@
   <!-- HERO -->
   <div class="hero">
     <div class="hero-emoji-wrap">🍪</div>
-    <h1>杏仁薄脆餅</h1>
-    <p class="hero-sub">Almond Crispy Cookies</p>
+    <h1 id="hero-title">杏仁薄脆餅</h1>
+    <p class="hero-sub" id="hero-sub">Almond Crispy Cookies</p>
     <div class="hero-divider"></div>
-    <div class="hero-chips">
+    <div class="hero-chips" id="hero-chips">
       <span class="hero-chip">🕐 準備 <strong>10 分鐘</strong></span>
       <span class="hero-chip">🔥 烘烤 <strong>15 分鐘</strong></span>
       <span class="hero-chip">🌰 <strong>杏仁香氣</strong></span>
@@ -792,8 +792,8 @@
 
       <!-- Batch size -->
       <div class="control-group">
-        <span class="control-label">選擇份量 Choose batch</span>
-        <div class="type-tabs">
+        <span class="control-label" id="ctrl-label-batch">選擇份量 Choose batch</span>
+        <div class="type-tabs" id="type-tabs">
           <button class="type-tab" onclick="setType('half')">🍪<br>小份<br><small>Half</small></button>
           <button class="type-tab active" onclick="setType('full')">🍪🍪<br>標準<br><small>Full</small></button>
           <button class="type-tab" onclick="setType('double')">🍪🍪🍪<br>雙倍<br><small>Double</small></button>
@@ -804,7 +804,7 @@
 
       <!-- Quantity stepper -->
       <div class="control-group">
-        <span class="control-label">份量 Quantity</span>
+        <span class="control-label" id="ctrl-label-qty">份量 Quantity</span>
         <div class="stepper">
           <button class="stepper-btn" onclick="changeQty(-1)">−</button>
           <span class="stepper-val" id="qty-val">90</span>
@@ -817,7 +817,7 @@
 
       <!-- Unit toggle -->
       <div class="control-group">
-        <span class="control-label">重量單位 Weight unit</span>
+        <span class="control-label" id="ctrl-label-unit">重量單位 Weight unit</span>
         <div class="unit-toggle">
           <button class="unit-btn active" id="btn-g" onclick="setUnit('g')">g</button>
           <button class="unit-btn" id="btn-oz" onclick="setUnit('oz')">oz</button>
@@ -1042,6 +1042,38 @@ function applyLang() {
   if (navBack) navBack.textContent = isEn ? 'All Recipes' : '所有食譜';
   const fontPillLabel = document.getElementById('font-pill-label');
   if (fontPillLabel) fontPillLabel.textContent = isEn ? 'Text Size' : '字體大小';
+
+  // ── EN-only: hide all Chinese when in English mode ──
+  document.documentElement.lang = isEn ? 'en' : 'zh-TW';
+  document.title = isEn ? 'Almond Crispy Cookies 🍪 | Landie Recipe' : '杏仁薄脆餅 🍪 | Landie Recipe';
+  const heroTitle = document.getElementById('hero-title');
+  if (heroTitle) heroTitle.textContent = isEn ? 'Almond Crispy Cookies' : '杏仁薄脆餅';
+  const heroSub = document.getElementById('hero-sub');
+  if (heroSub) heroSub.textContent = isEn ? '' : 'Almond Crispy Cookies';
+  const HERO_CHIPS_DATA = [
+    { zh: '🕐 準備 <strong>10 分鐘</strong>',   en: '🕐 Prep <strong>10 min</strong>' },
+    { zh: '🔥 烘烤 <strong>15 分鐘</strong>',   en: '🔥 Bake <strong>15 min</strong>' },
+    { zh: '🌰 <strong>杏仁香氣</strong>',        en: '🌰 <strong>Almond flavour</strong>' },
+    { zh: '📦 密封保存 <strong>2–3 週</strong>', en: '📦 Keeps <strong>2–3 weeks</strong>' },
+  ];
+  document.querySelectorAll('#hero-chips .hero-chip').forEach((chip, i) => {
+    if (HERO_CHIPS_DATA[i]) chip.innerHTML = isEn ? HERO_CHIPS_DATA[i].en : HERO_CHIPS_DATA[i].zh;
+  });
+  const ctrlBatch = document.getElementById('ctrl-label-batch');
+  if (ctrlBatch) ctrlBatch.textContent = isEn ? 'Choose Batch' : '選擇份量 Choose batch';
+  const ctrlQty = document.getElementById('ctrl-label-qty');
+  if (ctrlQty) ctrlQty.textContent = isEn ? 'Quantity' : '份量 Quantity';
+  const ctrlUnit = document.getElementById('ctrl-label-unit');
+  if (ctrlUnit) ctrlUnit.textContent = isEn ? 'Weight Unit' : '重量單位 Weight unit';
+  const TYPE_TABS_DATA = [
+    { zh: '🍪<br>小份<br><small>Half</small>',         en: '🍪<br>Half Batch' },
+    { zh: '🍪🍪<br>標準<br><small>Full</small>',       en: '🍪🍪<br>Full Batch' },
+    { zh: '🍪🍪🍪<br>雙倍<br><small>Double</small>',   en: '🍪🍪🍪<br>Double Batch' },
+  ];
+  document.querySelectorAll('#type-tabs .type-tab').forEach((tab, i) => {
+    if (TYPE_TABS_DATA[i]) tab.innerHTML = isEn ? TYPE_TABS_DATA[i].en : TYPE_TABS_DATA[i].zh;
+  });
+
   updateKeyStatus();
 }
 
@@ -1552,7 +1584,7 @@ function renderIngredients() {
     const primary = isEn ? group.labelEn : group.label;
     const secondary = isEn ? group.label : group.labelEn;
     html += `<div class="ing-group">
-      <div class="ing-group-label">${primary} <em>${secondary}</em></div>
+      <div class="ing-group-label">${primary}${isEn ? '' : ` <em>${secondary}</em>`}</div>
       <div class="ing-cards">`;
     group.items.forEach(ing => {
       const have = haveSet.has(ing.key);
@@ -1623,7 +1655,7 @@ function renderShopSheet() {
     INGREDIENT_GROUPS.forEach(group => {
       const items = group.items.filter(i => !haveSet.has(i.key));
       if (!items.length) return;
-      html += `<div class="shopping-group-label">${isEn ? group.labelEn+' · '+group.label : group.label+' · '+group.labelEn}</div>`;
+      html += `<div class="shopping-group-label">${isEn ? group.labelEn : group.label+' · '+group.labelEn}</div>`;
       items.forEach(ing => {
         const checked = shoppingChecked.has(ing.key);
         const m = fmtMeasure(ing.key);
@@ -1736,7 +1768,7 @@ function render() {
         <div class="step-num">${step.num}</div>
         <div>
           <div class="step-title-text">${step.title[lang]}</div>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${step.title[isEn?'zh':'en']}</div>
+          ${isEn ? '' : `<div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${step.title['en']}</div>`}
         </div>
       </div>
       <div class="step-instruction">${typeof step.instruction[lang] === 'function' ? step.instruction[lang]() : step.instruction[lang]}</div>

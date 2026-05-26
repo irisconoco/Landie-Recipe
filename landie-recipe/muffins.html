@@ -1218,10 +1218,10 @@
   <!-- HERO -->
   <div class="hero">
     <div class="hero-emoji-wrap">🧁</div>
-    <h1>香蕉燕麥馬芬</h1>
-    <p class="hero-sub">Banana Oat Muffins</p>
+    <h1 id="hero-title">香蕉燕麥馬芬</h1>
+    <p class="hero-sub" id="hero-sub">Banana Oat Muffins</p>
     <div class="hero-divider"></div>
-    <div class="hero-chips">
+    <div class="hero-chips" id="hero-chips">
       <span class="hero-chip">🕐 準備 <strong>10 分鐘</strong></span>
       <span class="hero-chip">🔥 烘烤 <strong>18–26 分鐘</strong></span>
       <span class="hero-chip">🌾 <strong>無精製糖</strong></span>
@@ -1235,8 +1235,8 @@
 
       <!-- Serving type -->
       <div class="control-group">
-        <span class="control-label">選擇模具 Choose mold</span>
-        <div class="type-tabs">
+        <span class="control-label" id="ctrl-label-mold">選擇模具 Choose mold</span>
+        <div class="type-tabs" id="type-tabs">
           <button class="type-tab active" onclick="setType('rect')">🟫<br>長方形模<br><small>Rect mold</small></button>
           <button class="type-tab" onclick="setType('std')">🧁<br>標準馬芬<br><small>Standard</small></button>
           <button class="type-tab" onclick="setType('mini')">✨<br>迷你馬芬<br><small>Mini</small></button>
@@ -1247,7 +1247,7 @@
 
       <!-- Quantity stepper -->
       <div class="control-group">
-        <span class="control-label">份量 Quantity</span>
+        <span class="control-label" id="ctrl-label-qty">份量 Quantity</span>
         <div class="stepper">
           <button class="stepper-btn" onclick="changeQty(-1)">−</button>
           <span class="stepper-val" id="qty-val">3</span>
@@ -1260,7 +1260,7 @@
 
       <!-- Unit toggle -->
       <div class="control-group">
-        <span class="control-label">重量單位 Weight unit</span>
+        <span class="control-label" id="ctrl-label-unit">重量單位 Weight unit</span>
         <div class="unit-toggle">
           <button class="unit-btn active" id="btn-g" onclick="setUnit('g')">g</button>
           <button class="unit-btn" id="btn-oz" onclick="setUnit('oz')">oz</button>
@@ -1648,6 +1648,46 @@ function applyLang() {
   if (printBtnLabel) printBtnLabel.textContent = isEn ? 'Print Recipe' : '列印食譜';
   const fontPillLabel = document.getElementById('font-pill-label');
   if (fontPillLabel) fontPillLabel.textContent = isEn ? 'Text Size' : '字體大小';
+
+  // ── EN-only: page meta ──
+  document.documentElement.lang = isEn ? 'en' : 'zh-TW';
+  document.title = isEn ? 'Banana Oat Muffins 🧁 | Landie Recipe' : '香蕉燕麥馬芬 🧁 | Landie Recipe';
+
+  // ── EN-only: hero ──
+  const heroTitle = document.getElementById('hero-title');
+  if (heroTitle) heroTitle.textContent = isEn ? 'Banana Oat Muffins' : '香蕉燕麥馬芬';
+  const heroSub = document.getElementById('hero-sub');
+  if (heroSub) heroSub.textContent = isEn ? '' : 'Banana Oat Muffins';
+
+  // ── EN-only: hero chips ──
+  const HERO_CHIPS_DATA = [
+    { zh: '🕐 準備 <strong>10 分鐘</strong>',        en: '🕐 Prep <strong>10 min</strong>' },
+    { zh: '🔥 烘烤 <strong>18–26 分鐘</strong>',      en: '🔥 Bake <strong>18–26 min</strong>' },
+    { zh: '🌾 <strong>無精製糖</strong>',              en: '🌾 <strong>No refined sugar</strong>' },
+    { zh: '📦 可冷凍 <strong>3 個月</strong>',         en: '📦 Freeze up to <strong>3 months</strong>' },
+  ];
+  document.querySelectorAll('#hero-chips .hero-chip').forEach((chip, i) => {
+    if (HERO_CHIPS_DATA[i]) chip.innerHTML = isEn ? HERO_CHIPS_DATA[i].en : HERO_CHIPS_DATA[i].zh;
+  });
+
+  // ── EN-only: control panel labels ──
+  const ctrlMold = document.getElementById('ctrl-label-mold');
+  if (ctrlMold) ctrlMold.textContent = isEn ? 'Choose Mold' : '選擇模具 Choose mold';
+  const ctrlQty = document.getElementById('ctrl-label-qty');
+  if (ctrlQty) ctrlQty.textContent = isEn ? 'Quantity' : '份量 Quantity';
+  const ctrlUnit = document.getElementById('ctrl-label-unit');
+  if (ctrlUnit) ctrlUnit.textContent = isEn ? 'Weight Unit' : '重量單位 Weight unit';
+
+  // ── EN-only: type tabs ──
+  const TYPE_TABS_DATA = [
+    { zh: '🟫<br>長方形模<br><small>Rect mold</small>', en: '🟫<br>Rect Mold' },
+    { zh: '🧁<br>標準馬芬<br><small>Standard</small>',  en: '🧁<br>Standard' },
+    { zh: '✨<br>迷你馬芬<br><small>Mini</small>',       en: '✨<br>Mini' },
+  ];
+  document.querySelectorAll('#type-tabs .type-tab').forEach((tab, i) => {
+    if (TYPE_TABS_DATA[i]) tab.innerHTML = isEn ? TYPE_TABS_DATA[i].en : TYPE_TABS_DATA[i].zh;
+  });
+
   updateKeyStatus();
   updateMadeBtn();
 }
@@ -2167,7 +2207,7 @@ function renderIngredients() {
     const primary = isEn ? group.labelEn : group.label;
     const secondary = isEn ? group.label : group.labelEn;
     html += `<div class="ing-group">
-      <div class="ing-group-label">${primary} <em>${secondary}</em></div>
+      <div class="ing-group-label">${primary}${isEn ? '' : ` <em>${secondary}</em>`}</div>
       <div class="ing-cards">`;
     group.items.forEach(ing => {
       const have = haveSet.has(ing.key);
@@ -2240,7 +2280,7 @@ function renderShopSheet() {
     INGREDIENT_GROUPS.forEach(group => {
       const items = group.items.filter(i => !haveSet.has(i.key));
       if (!items.length) return;
-      html += `<div class="shopping-group-label">${isEn ? group.labelEn+' · '+group.label : group.label+' · '+group.labelEn}</div>`;
+      html += `<div class="shopping-group-label">${isEn ? group.labelEn : group.label+' · '+group.labelEn}</div>`;
       items.forEach(ing => {
         const checked = shoppingChecked.has(ing.key);
         const m = fmtMeasure(ing.key);
@@ -2443,7 +2483,7 @@ function render() {
         <div class="step-num">${step.num}</div>
         <div style="flex:1">
           <div class="step-title-text">${step.title[lang]}</div>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${step.title[isEn?'zh':'en']}</div>
+          ${isEn ? '' : `<div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${step.title['en']}</div>`}
         </div>
         <span class="step-diff-pill ${step.difficulty}" data-tip="${diffTip}">${diffLabel}</span>
       </div>
