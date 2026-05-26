@@ -455,13 +455,13 @@
   /* ── ING CARD HAVE STATE ── */
   .ing-card.selectable { cursor: pointer; user-select: none; }
   .ing-card-check {
-    position: absolute; top: 7px; right: 7px;
-    width: 20px; height: 20px; border-radius: 50%;
+    flex-shrink: 0;
+    width: 18px; height: 18px; border-radius: 50%;
     border: 1.5px solid var(--oat-light); background: white;
     display: flex; align-items: center; justify-content: center;
     pointer-events: none; transition: all 0.2s ease; color: transparent;
   }
-  .ing-card.have { opacity: 0.45; }
+  .ing-card.have { opacity: 0.5; }
   .ing-card.have .ing-card-check { background: var(--sage); border-color: var(--sage-dark); color: white; }
   .ing-card.have .ing-name { text-decoration: line-through; text-decoration-color: var(--text-muted); }
 
@@ -603,12 +603,12 @@
 
   /* ── SUBSTITUTION HELPER ── */
   .sub-btn {
-    position: absolute; top: 6px; right: 6px;
+    flex-shrink: 0;
     width: 22px; height: 22px; border-radius: 50%;
     border: 1px solid var(--oat-light); background: var(--card-bg);
     color: var(--oat-dark); font-size: 11px; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    transition: all 0.18s; z-index: 2; flex-shrink: 0;
+    transition: all 0.18s; z-index: 2;
   }
   .sub-btn:hover { background: var(--oat-light); border-color: var(--oat); }
   .subs-popover {
@@ -662,10 +662,17 @@
   }
 
   /* ── I MADE THIS ── */
-  .made-section { text-align: center; margin: 28px 0; }
+  /* ── I MADE THIS ── */
+  .made-section {
+    text-align: center; margin: 28px 0;
+    background: var(--card-bg); border-radius: var(--radius);
+    border: 1px solid var(--oat-light);
+    padding: 28px 20px 22px;
+    box-shadow: 0 2px 16px rgba(92,64,51,0.07);
+  }
   .made-btn {
     display: inline-flex; align-items: center; gap: 10px;
-    padding: 16px 32px; border-radius: 100px;
+    padding: 15px 32px; border-radius: 100px;
     background: linear-gradient(135deg, var(--oat), var(--oat-dark));
     border: none; color: #fff; font-family: 'Noto Sans TC', sans-serif;
     font-size: 16px; font-weight: 600; cursor: pointer;
@@ -673,11 +680,80 @@
     transition: all 0.25s ease; letter-spacing: 0.03em;
   }
   .made-btn:hover { transform: scale(1.04); box-shadow: 0 6px 28px rgba(196,149,106,0.5); }
+  .made-btn:active { transform: scale(0.97); }
   .made-btn.made-done {
     background: linear-gradient(135deg, #4caf82, #2d8a5e);
     box-shadow: 0 4px 20px rgba(76,175,130,0.4);
   }
-  .made-date { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+  /* Stats row */
+  .made-stats { margin-top: 16px; }
+  .made-count-row {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    margin-bottom: 4px;
+  }
+  .made-count-num {
+    font-size: 28px; font-weight: 700; font-family: 'Noto Serif TC', serif;
+    color: var(--brown); line-height: 1;
+  }
+  .made-count-label { font-size: 13px; color: var(--text-muted); align-self: flex-end; padding-bottom: 3px; }
+  .made-again-btn {
+    margin-left: 10px; padding: 4px 12px; border-radius: 100px;
+    border: 1.5px solid var(--oat-light); background: transparent;
+    font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: var(--oat-dark);
+    cursor: pointer; transition: all 0.18s;
+  }
+  .made-again-btn:hover { background: var(--oat-light); border-color: var(--oat); }
+  .made-date { font-size: 11px; color: var(--text-muted); margin-top: 2px; margin-bottom: 12px; }
+  /* Badges */
+  .made-badges {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
+    margin: 14px 0 2px;
+  }
+  .made-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600;
+    border: 1.5px solid var(--oat-light); color: var(--text-muted);
+    background: transparent; transition: all 0.3s; user-select: none;
+    opacity: 0.45;
+  }
+  .made-badge.earned {
+    opacity: 1; background: linear-gradient(135deg, #FFF8EE, #FFF0DC);
+    border-color: var(--oat); color: var(--oat-dark);
+    box-shadow: 0 2px 8px rgba(196,149,106,0.2);
+  }
+  .made-badge.earned.new-badge { animation: badgePop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+  @keyframes badgePop {
+    0%   { transform: scale(0.5); opacity: 0; }
+    60%  { transform: scale(1.18); }
+    100% { transform: scale(1);   opacity: 1; }
+  }
+  /* Reactions */
+  .made-reactions-wrap {
+    margin-top: 20px; padding-top: 18px;
+    border-top: 1px solid var(--oat-light);
+  }
+  .made-reactions-label {
+    font-size: 11px; color: var(--text-muted); margin-bottom: 10px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .made-reactions { display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .reaction-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 18px; border-radius: 100px;
+    border: 1.5px solid var(--oat-light); background: var(--card-bg);
+    cursor: pointer; transition: all 0.18s; font-family: inherit;
+  }
+  .reaction-btn:hover { background: var(--oat-light); border-color: var(--oat); transform: scale(1.06); }
+  .reaction-btn:active { transform: scale(0.95); }
+  .reaction-emoji { font-size: 18px; line-height: 1; }
+  .reaction-count { font-size: 13px; font-weight: 600; color: var(--oat-dark); }
+  @keyframes reactionPop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.3) rotate(-8deg); }
+    70%  { transform: scale(0.92) rotate(4deg); }
+    100% { transform: scale(1); }
+  }
+  .reaction-btn.reaction-pop .reaction-emoji { animation: reactionPop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
 
   /* ── CONFETTI ── */
   .confetti-piece {
@@ -690,30 +766,14 @@
   }
 
   /* ── PRINT ── */
+  /* ── PRINT INGREDIENT LIST (hidden on screen, shown only in print) ── */
+  .print-ing-list { display: none; }
+
+  /* ── A4 PRINT LAYOUT ── */
+  @page { size: A4 portrait; margin: 18mm 20mm; }
+
   @media print {
-    body:not(.printing-shopping) .recipe-nav,
-    body:not(.printing-shopping) .util-bar,
-    .font-pill,
-    body:not(.printing-shopping) .control-panel,
-    body:not(.printing-shopping) .shop-entry-btn,
-    body:not(.printing-shopping) .shop-generate-btn,
-    body:not(.printing-shopping) .select-banner,
-    body:not(.printing-shopping) #section-gallery,
-    body:not(.printing-shopping) .gallery-upload,
-    body:not(.printing-shopping) .gallery-apikey-row,
-    body:not(.printing-shopping) .gallery-key-bar,
-    body:not(.printing-shopping) .gallery-entries,
-    body:not(.printing-shopping) .made-section,
-    body:not(.printing-shopping) .notes-card,
-    body:not(.printing-shopping) .toast,
-    body:not(.printing-shopping) .timer-fullscreen,
-    body:not(.printing-shopping) .shop-overlay { display: none !important; }
-    body:not(.printing-shopping) .container { padding: 16px !important; }
-    body:not(.printing-shopping) .hero { box-shadow: none !important; border: 1px solid #ddd !important; }
-    body:not(.printing-shopping) .step-card { box-shadow: none !important; break-inside: avoid; border: 1px solid #eee !important; }
-    body:not(.printing-shopping) .ingredients-card { box-shadow: none !important; }
-    body:not(.printing-shopping) .sub-btn { display: none !important; }
-    #diff-tip-popup { display: none !important; }
+    /* ── SHOPPING LIST PRINT MODE ── */
     body.printing-shopping * { visibility: hidden; }
     body.printing-shopping .print-area,
     body.printing-shopping .print-area * { visibility: visible; }
@@ -721,6 +781,258 @@
     body.printing-shopping .shop-sheet-footer,
     body.printing-shopping .shop-back-btn,
     body.printing-shopping .shop-close-btn { display: none !important; }
+
+    /* ── RECIPE PRINT MODE — hide chrome ── */
+    body:not(.printing-shopping) .recipe-nav,
+    body:not(.printing-shopping) .util-bar,
+    body:not(.printing-shopping) .font-pill,
+    body:not(.printing-shopping) .control-panel,
+    body:not(.printing-shopping) .hero-divider,
+    body:not(.printing-shopping) .hero-chips,
+    body:not(.printing-shopping) .shop-entry-btn,
+    body:not(.printing-shopping) .shop-generate-btn,
+    body:not(.printing-shopping) .select-banner,
+    body:not(.printing-shopping) .section-title,
+    body:not(.printing-shopping) #section-gallery,
+    body:not(.printing-shopping) .gallery-upload,
+    body:not(.printing-shopping) .gallery-apikey-row,
+    body:not(.printing-shopping) .gallery-key-bar,
+    body:not(.printing-shopping) .gallery-entries,
+    body:not(.printing-shopping) .made-section,
+    body:not(.printing-shopping) .notes-card,
+    body:not(.printing-shopping) .tools-section,
+    body:not(.printing-shopping) .toast,
+    body:not(.printing-shopping) .timer-fullscreen,
+    body:not(.printing-shopping) .shop-overlay,
+    body:not(.printing-shopping) .sub-btn,
+    body:not(.printing-shopping) .step-diff-pill,
+    body:not(.printing-shopping) .bake-timer-card,
+    body:not(.printing-shopping) .ing-group,
+    body:not(.printing-shopping) .logo-wrapper,
+    #diff-tip-popup, #gloss-tooltip, #subs-popover { display: none !important; }
+
+    /* ── PAGE GLOBALS ── */
+    body {
+      background: #fff !important;
+      color: #1a1a1a !important;
+      font-family: 'Noto Sans TC', 'Noto Serif TC', Georgia, serif;
+      font-size: 10pt;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    body::before { display: none !important; }
+
+    .container {
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    /* ── PRINT HEADER ── */
+    .hero {
+      display: flex !important;
+      align-items: center !important;
+      gap: 16pt !important;
+      padding: 14pt 0 12pt !important;
+      border-bottom: 2pt solid #5C4033 !important;
+      border-radius: 0 !important;
+      background: none !important;
+      box-shadow: none !important;
+      margin-bottom: 0 !important;
+      text-align: left !important;
+    }
+    .hero-emoji-wrap {
+      font-size: 36pt !important;
+      background: none !important;
+      box-shadow: none !important;
+      width: auto !important; height: auto !important;
+      line-height: 1 !important;
+      flex-shrink: 0 !important;
+    }
+    .hero h1, #hero-title {
+      font-family: 'Noto Serif TC', Georgia, serif !important;
+      font-size: 22pt !important;
+      font-weight: 700 !important;
+      color: #5C4033 !important;
+      line-height: 1.1 !important;
+      margin: 0 !important;
+    }
+    .hero-sub, #hero-sub {
+      font-size: 11pt !important;
+      color: #7A6054 !important;
+      margin: 3pt 0 0 !important;
+      font-style: italic !important;
+    }
+    .hero-text-block { flex: 1; }
+
+    /* Show print-only elements */
+    #print-meta,
+    #print-ing-heading,
+    #print-steps-heading { display: block !important; }
+
+    /* ── PRINT META BLOCK ── */
+    .print-meta {
+      display: block !important;
+      padding: 7pt 0 10pt !important;
+      border-bottom: 0.5pt solid #C4956A !important;
+      margin-bottom: 14pt !important;
+      color: #5C4033 !important;
+    }
+    .print-meta-row {
+      display: flex !important;
+      align-items: center !important;
+      gap: 20pt !important;
+      font-size: 9pt !important;
+      margin-bottom: 5pt !important;
+    }
+    .print-meta-item { display: flex; align-items: center; gap: 4pt; }
+    .print-meta-item strong { font-weight: 600; }
+    .print-meta-summary {
+      font-size: 11pt !important;
+      font-weight: 600 !important;
+      color: #3D2B1F !important;
+      letter-spacing: 0.01em !important;
+    }
+
+    /* ── INGREDIENT SECTION HEADING ── */
+    .print-ing-heading {
+      font-family: 'Noto Serif TC', Georgia, serif !important;
+      font-size: 11pt !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.12em !important;
+      text-transform: uppercase !important;
+      color: #5C4033 !important;
+      margin-bottom: 8pt !important;
+    }
+
+    /* ── TEXT INGREDIENT LIST ── */
+    .print-ing-list {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 0 18pt !important;
+      margin-bottom: 16pt !important;
+      padding-bottom: 14pt !important;
+      border-bottom: 0.5pt solid #C4956A !important;
+    }
+    .print-ing-group-title {
+      font-size: 8pt !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.14em !important;
+      text-transform: uppercase !important;
+      color: #9B6E47 !important;
+      border-bottom: 0.5pt solid #E8D5BE !important;
+      padding-bottom: 3pt !important;
+      margin-bottom: 5pt !important;
+    }
+    .print-ing-ul {
+      list-style: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    .print-ing-item {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: baseline !important;
+      gap: 6pt !important;
+      padding: 2.5pt 0 !important;
+      border-bottom: 0.3pt solid #f0e8e0 !important;
+      font-size: 9.5pt !important;
+      line-height: 1.3 !important;
+    }
+    .print-ing-item:last-child { border-bottom: none !important; }
+    .print-ing-name { color: #1a1a1a !important; flex: 1 !important; }
+    .print-ing-measure {
+      color: #7A6054 !important;
+      font-size: 8.5pt !important;
+      white-space: nowrap !important;
+      text-align: right !important;
+    }
+
+    /* ── STEPS SECTION HEADING ── */
+    .print-steps-heading {
+      font-family: 'Noto Serif TC', Georgia, serif !important;
+      font-size: 11pt !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.12em !important;
+      text-transform: uppercase !important;
+      color: #5C4033 !important;
+      margin-bottom: 8pt !important;
+    }
+
+    /* ── STEP CARDS ── */
+    .steps-wrapper {
+      display: block !important;
+    }
+    .step-card {
+      box-shadow: none !important;
+      border: 0.5pt solid #ddd !important;
+      border-radius: 4pt !important;
+      margin-bottom: 7pt !important;
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
+      background: #fff !important;
+      padding: 0 !important;
+    }
+    .step-header {
+      padding: 7pt 10pt 5pt !important;
+      gap: 8pt !important;
+      border-bottom: 0.3pt solid #eee !important;
+    }
+    .step-num {
+      width: 20pt !important; height: 20pt !important;
+      font-size: 9pt !important;
+      flex-shrink: 0 !important;
+      background: #5C4033 !important;
+      color: #fff !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .step-title-text {
+      font-size: 10pt !important;
+      font-weight: 600 !important;
+      color: #5C4033 !important;
+    }
+    .step-instruction {
+      padding: 6pt 10pt 8pt 38pt !important;
+      font-size: 9.5pt !important;
+      line-height: 1.65 !important;
+      color: #1a1a1a !important;
+    }
+    /* Keep bake info block but compact it */
+    .bake-times {
+      padding: 5pt 10pt 7pt 38pt !important;
+      display: flex !important;
+      gap: 12pt !important;
+      flex-wrap: wrap !important;
+    }
+    .bake-badge {
+      box-shadow: none !important;
+      border: 0.5pt solid #E8D5BE !important;
+      padding: 4pt 8pt !important;
+      border-radius: 3pt !important;
+      background: #FFF8F2 !important;
+    }
+    .bake-label { font-size: 8pt !important; }
+    .bake-time  { font-size: 9pt !important; font-weight: 600 !important; }
+    .bake-badge-timer { display: none !important; }
+
+    /* Glossary underlines look odd on paper — strip them */
+    .gloss { border-bottom: none !important; }
+
+    /* Step ingredient chips, bake timer buttons hidden in print */
+    .step-ings { display: none !important; }
+    .step-card .ing-cards { display: none !important; }
+    .timer-start-btn { display: none !important; }
+
+    /* ── INGREDIENTS CARD wrapper ── */
+    .ingredients-card {
+      box-shadow: none !important;
+      border: none !important;
+      background: none !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      margin-bottom: 0 !important;
+    }
   }
 
   /* ── SECTIONS ── */
@@ -960,52 +1272,60 @@
   .loading-dot:nth-child(2) { animation-delay: 0.2s; }
   .loading-dot:nth-child(3) { animation-delay: 0.4s; }
 
-  /* Ingredient cards row */
+  /* Ingredient list rows (main section) */
   .ing-cards {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 0 16px 20px;
+    flex-direction: column;
+    gap: 0;
+    padding: 0 0 8px;
   }
 
   .ing-card {
-    background: var(--cream);
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
-    min-width: 100px;
-    flex: 1;
-    text-align: center;
-    border: 1.5px solid transparent;
-    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px;
+    min-width: unset;
+    flex: none;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid rgba(232, 213, 190, 0.5);
+    text-align: left;
+    background: transparent;
     position: relative;
     overflow: hidden;
+    transition: background 0.18s ease;
   }
+
+  .ing-card:last-child { border-bottom: none; }
 
   .ing-card::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(196,149,106,0.05), rgba(168,181,160,0.05));
+    background: linear-gradient(90deg, rgba(196,149,106,0.07) 0%, transparent 60%);
     opacity: 0;
-    transition: opacity 0.25s;
+    transition: opacity 0.2s;
   }
 
   .ing-card:hover {
-    border-color: var(--oat-light);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(196,149,106,0.15);
+    background: rgba(232, 213, 190, 0.18);
+    border-color: rgba(232, 213, 190, 0.5);
+    transform: none;
+    box-shadow: none;
   }
 
   .ing-card:hover::before { opacity: 1; }
 
-  .ing-emoji { font-size: 24px; display: block; margin-bottom: 6px; }
+  .ing-emoji { font-size: 22px; display: block; }
   .ing-name {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-    letter-spacing: 0.03em;
-    line-height: 1.3;
+    flex: 1;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0;
+    letter-spacing: 0.01em;
+    line-height: 1.35;
   }
 
   .ing-cup {
@@ -1013,14 +1333,54 @@
     font-weight: 600;
     color: var(--brown);
     font-family: 'Noto Serif TC', serif;
-    margin-bottom: 3px;
+    margin-bottom: 0;
+    white-space: nowrap;
+    min-width: 68px;
+    text-align: right;
   }
 
   .ing-weight {
-    font-size: 12px;
-    color: var(--oat-dark);
-    font-weight: 500;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 400;
+    white-space: nowrap;
+    min-width: 44px;
+    text-align: right;
   }
+
+  /* Step ingredient chips — restore portrait card appearance */
+  .step-card .ing-cards {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0 20px 20px;
+  }
+  .step-card .ing-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 80px;
+    flex: 1;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid transparent;
+    border-bottom: 1.5px solid transparent;
+    background: var(--cream);
+    padding: 12px 14px;
+    gap: 0;
+    transition: all 0.25s ease;
+  }
+  .step-card .ing-card:last-child { border-bottom: 1.5px solid transparent; }
+  .step-card .ing-card:hover {
+    border-color: var(--oat-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(196,149,106,0.15);
+    background: var(--cream);
+  }
+  .step-card .ing-card:hover::before { opacity: 1; }
+  .step-card .ing-emoji { margin-bottom: 6px; }
+  .step-card .ing-name { font-size: 11px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; letter-spacing: 0.03em; line-height: 1.3; }
+  .step-card .ing-cup  { font-size: 13px; margin-bottom: 3px; text-align: center; min-width: unset; white-space: normal; }
+  .step-card .ing-weight { font-size: 12px; color: var(--oat-dark); font-weight: 500; text-align: center; min-width: unset; white-space: normal; }
 
   /* ── NOTES ── */
   .notes-card {
@@ -1046,6 +1406,93 @@
   .note-item:last-child { border-bottom: none; padding-bottom: 0; }
   .note-item:first-child { padding-top: 0; }
   .note-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── TOOLS (collapsible) ── */
+  .tools-section { margin-bottom: 28px; }
+
+  .tools-toggle {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; padding: 15px 20px;
+    background: var(--card-bg); border: none; border-radius: var(--radius);
+    cursor: pointer; font-family: 'Noto Sans TC', sans-serif;
+    box-shadow: var(--shadow-soft);
+    transition: background 0.2s ease, border-radius 0.25s ease, box-shadow 0.2s ease;
+    text-align: left; animation: fadeUp 0.6s ease both 0.3s;
+  }
+  .tools-toggle:hover { background: linear-gradient(135deg, #FFF8F0, #F5F8F3); }
+  .tools-section.open .tools-toggle {
+    border-radius: var(--radius) var(--radius) 0 0;
+    box-shadow: 0 2px 6px rgba(92,64,51,0.06);
+    border-bottom: 1px solid rgba(232, 213, 190, 0.6);
+    background: linear-gradient(135deg, #FFF8F0, #F5F8F3);
+  }
+
+  .tools-toggle-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+  .tools-emoji-preview { font-size: 16px; letter-spacing: 2px; flex-shrink: 0; opacity: 0.75; line-height: 1; }
+  .tools-toggle-text { display: flex; flex-direction: column; gap: 3px; }
+  .tools-toggle-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-muted); display: block;
+  }
+  .tools-toggle-meta { font-size: 12.5px; color: var(--brown); font-weight: 500; display: block; }
+
+  .tools-toggle-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .tools-toggle-hint { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+  .tools-chevron {
+    width: 16px; height: 16px; color: var(--oat); flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .tools-section.open .tools-chevron { transform: rotate(180deg); }
+
+  /* Smooth expand / collapse */
+  .tools-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .tools-section.open .tools-body { grid-template-rows: 1fr; }
+  .tools-body-inner { overflow: hidden; }
+
+  .tools-card {
+    background: var(--card-bg);
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: 4px 0 8px;
+    box-shadow: 0 6px 24px rgba(92,64,51,0.09);
+    overflow: hidden;
+  }
+
+  .tool-item {
+    display: flex; gap: 14px; padding: 13px 20px;
+    border-bottom: 1px solid rgba(232, 213, 190, 0.45);
+    align-items: flex-start; transition: background 0.18s ease;
+  }
+  .tool-item:last-child { border-bottom: none; }
+  .tool-item:hover { background: rgba(250, 247, 242, 0.7); }
+
+  .tool-emoji { font-size: 22px; width: 34px; flex-shrink: 0; text-align: center; margin-top: 1px; }
+  .tool-body  { flex: 1; min-width: 0; }
+
+  .tool-header { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 5px; }
+  .tool-name { font-size: 13px; font-weight: 600; color: var(--brown); flex: 1; line-height: 1.35; }
+
+  .tool-badge {
+    flex-shrink: 0; font-size: 10px; font-weight: 500; padding: 2px 8px;
+    border-radius: 100px; letter-spacing: 0.04em; white-space: nowrap; margin-top: 1px;
+  }
+  .tool-badge.essential { background: #fef3de; color: #9a6718; }
+  .tool-badge.optional  { background: var(--sage-light); color: var(--sage-dark); }
+
+  .tool-why { font-size: 12.5px; color: var(--text-light); line-height: 1.65; margin-bottom: 8px; }
+
+  .tool-alt {
+    display: flex; align-items: flex-start; gap: 7px;
+    font-size: 11.5px; color: var(--text-muted); line-height: 1.6;
+    background: rgba(168, 181, 160, 0.1);
+    border-left: 2px solid var(--sage-light);
+    border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+    padding: 6px 10px;
+  }
+  .tool-alt-label { font-weight: 600; color: var(--sage-dark); flex-shrink: 0; font-size: 11px; }
 
   /* ── ANIMATIONS ── */
   @keyframes fadeDown {
@@ -1078,20 +1525,20 @@
     .control-divider { display: none; }
     .control-group { min-width: unset; }
     .type-tab { font-size: 11px; padding: 8px 4px; }
-    .ing-card { min-width: 80px; }
+    .step-card .ing-card { min-width: 72px; }
     .stepper { width: 100%; justify-content: center; }
     .unit-toggle { justify-content: center; }
   }
 
   @media (min-width: 601px) and (max-width: 900px) {
-    .ing-card { min-width: 110px; }
+    .step-card .ing-card { min-width: 100px; }
   }
 
   @media (min-width: 901px) {
     .container { padding: 0 24px 80px; }
     .step-header { padding: 24px 28px 18px; }
     .step-instruction { padding: 0 28px 20px; font-size: 15px; }
-    .ing-cards { padding: 0 20px 24px; }
+    .step-card .ing-cards { padding: 0 28px 24px; }
     .bake-times { padding: 0 28px 24px; }
   }
 
@@ -1218,8 +1665,10 @@
   <!-- HERO -->
   <div class="hero">
     <div class="hero-emoji-wrap">🧁</div>
-    <h1 id="hero-title">香蕉燕麥馬芬</h1>
-    <p class="hero-sub" id="hero-sub">Banana Oat Muffins</p>
+    <div class="hero-text-block">
+      <h1 id="hero-title">香蕉燕麥馬芬</h1>
+      <p class="hero-sub" id="hero-sub">Banana Oat Muffins</p>
+    </div>
     <div class="hero-divider"></div>
     <div class="hero-chips" id="hero-chips">
       <span class="hero-chip">🕐 準備 <strong>10 分鐘</strong></span>
@@ -1227,6 +1676,16 @@
       <span class="hero-chip">🌾 <strong>無精製糖</strong></span>
       <span class="hero-chip">📦 可冷凍 <strong>3 個月</strong></span>
     </div>
+  </div>
+
+  <!-- PRINT META (only visible in @media print) -->
+  <div class="print-meta" id="print-meta" style="display:none">
+    <div class="print-meta-row">
+      <div class="print-meta-item">🕐 <span id="print-meta-prep"></span></div>
+      <div class="print-meta-item">🔥 <span id="print-meta-bake"></span></div>
+      <div class="print-meta-item print-meta-unit">⚖️ <span id="print-meta-unit"></span></div>
+    </div>
+    <div class="print-meta-summary" id="print-meta-summary"></div>
   </div>
 
   <!-- CONTROL PANEL -->
@@ -1276,12 +1735,39 @@
 
   <!-- INGREDIENTS -->
   <div class="section-title" id="section-ingredients">食材清單 Ingredients</div>
+  <!-- Print-only ingredient heading + text list (hidden on screen) -->
+  <div class="print-ing-heading" id="print-ing-heading" style="display:none"></div>
+  <div class="print-ing-list" id="print-ing-list"><!-- populated by renderIngredients() --></div>
   <div class="ingredients-card" id="ingredients-card">
     <!-- Generated by JS -->
   </div>
 
+  <!-- TOOLS (collapsible) -->
+  <div class="tools-section" id="tools-section">
+    <button class="tools-toggle" id="tools-toggle" onclick="toggleToolsSection()">
+      <div class="tools-toggle-left">
+        <span class="tools-emoji-preview">🥣🍴🥄🔥🧁</span>
+        <div class="tools-toggle-text">
+          <span class="tools-toggle-title" id="section-tools">工具清單 Tools</span>
+          <span class="tools-toggle-meta" id="tools-toggle-meta">7 必備・4 選用</span>
+        </div>
+      </div>
+      <div class="tools-toggle-right">
+        <span class="tools-toggle-hint" id="tools-toggle-hint">查看工具</span>
+        <svg class="tools-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </button>
+    <div class="tools-body" id="tools-body">
+      <div class="tools-body-inner">
+        <div class="tools-card" id="tools-card"><!-- Generated by JS --></div>
+      </div>
+    </div>
+  </div>
+
   <!-- STEPS -->
   <div class="section-title" id="section-steps">步驟 Steps</div>
+  <!-- Print-only steps heading (hidden on screen) -->
+  <div class="print-steps-heading" id="print-steps-heading" style="display:none"></div>
   <div class="steps-wrapper" id="steps-wrapper">
     <!-- Generated by JS -->
   </div>
@@ -1289,13 +1775,49 @@
   <!-- NOTES -->
   <div class="notes-card" id="notes-card"><!-- JS rendered --></div>
 
-  <!-- I MADE THIS -->
+  <!-- I MADE THIS + BADGES + REACTIONS -->
   <div class="made-section" id="made-section">
+
+    <!-- Primary CTA -->
     <button class="made-btn" id="made-btn" onclick="handleMadeBtn()">
       <span id="made-icon">🎉</span>
       <span id="made-label">我做了！ I Made This!</span>
     </button>
-    <div class="made-date" id="made-date" style="display:none"></div>
+
+    <!-- Stats (revealed after first bake) -->
+    <div class="made-stats" id="made-stats" style="display:none">
+      <div class="made-count-row">
+        <span class="made-count-num" id="made-count-num">1</span>
+        <span class="made-count-label" id="made-count-label">次烘焙</span>
+        <button class="made-again-btn" id="made-again-btn" onclick="handleMadeAgain()">
+          <span id="made-again-label">+ 再做一次</span>
+        </button>
+      </div>
+      <div class="made-date" id="made-date"></div>
+    </div>
+
+    <!-- Badges — always visible; locked/unlocked state controlled by JS -->
+    <div class="made-badges" id="made-badges"></div>
+
+    <!-- Community reactions -->
+    <div class="made-reactions-wrap">
+      <div class="made-reactions-label" id="made-reactions-label">為食譜鼓掌</div>
+      <div class="made-reactions" id="made-reactions">
+        <button class="reaction-btn" id="react-btn-party" onclick="addReaction('party')">
+          <span class="reaction-emoji">🎉</span>
+          <span class="reaction-count" id="react-count-party">47</span>
+        </button>
+        <button class="reaction-btn" id="react-btn-clap" onclick="addReaction('clap')">
+          <span class="reaction-emoji">👏</span>
+          <span class="reaction-count" id="react-count-clap">31</span>
+        </button>
+        <button class="reaction-btn" id="react-btn-heart" onclick="addReaction('heart')">
+          <span class="reaction-emoji">❤️</span>
+          <span class="reaction-count" id="react-count-heart">62</span>
+        </button>
+      </div>
+    </div>
+
   </div>
 
   <!-- GALLERY -->
@@ -1427,12 +1949,27 @@ const GLOSSARY = {
 function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
 function wrapGloss(html) {
-  const terms = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
+  const isEn = lang === 'en';
+  // Sort keys by the length of the match string (longest first to avoid partial overlap)
+  const keys = Object.keys(GLOSSARY).sort((a, b) => {
+    const aLen = isEn ? a.length : GLOSSARY[a].zh.term.length;
+    const bLen = isEn ? b.length : GLOSSARY[b].zh.term.length;
+    return bLen - aLen;
+  });
   return html.split(/(<[^>]+>)/).map((part, i) => {
-    if (i % 2 === 1) return part;
-    for (const term of terms) {
-      const rx = new RegExp(`\\b${escapeRegex(term)}\\b`, 'gi');
-      part = part.replace(rx, `<span class="gloss" data-term="${term}">$&</span>`);
+    if (i % 2 === 1) return part; // skip HTML tags
+    for (const key of keys) {
+      const matchStr = isEn ? key : GLOSSARY[key].zh.term;
+      if (!matchStr) continue;
+      if (isEn) {
+        // English: use \b word boundaries, case-insensitive
+        const rx = new RegExp(`\\b${escapeRegex(matchStr)}\\b`, 'gi');
+        part = part.replace(rx, `<span class="gloss" data-term="${key}">$&</span>`);
+      } else {
+        // Chinese: CJK has no \b boundaries — plain substring match
+        const rx = new RegExp(escapeRegex(matchStr), 'g');
+        part = part.replace(rx, `<span class="gloss" data-term="${key}">$&</span>`);
+      }
     }
     return part;
   }).join('');
@@ -1549,6 +2086,76 @@ const NOTES = [
   { icon:'✅', zh:'竹籤插入中心取出無沾黏，或輕按頂部會回彈，即表示烤熟。', en:'Done when a toothpick comes out clean or the top springs back when lightly pressed.' },
 ];
 
+// ── TOOLS ──
+const TOOLS = [
+  {
+    key: 'bowls', emoji: '🥣', essential: true,
+    name:  { zh: '攪拌盆（大、中各一）', en: 'Mixing Bowls — 1 large + 1 medium' },
+    why:   { zh: '大盆混合濕性材料，中盆混合乾性材料，分開備料是避免過度攪拌的第一步。', en: 'One for wet, one for dry — keeping them separate until the final fold is the key to a light muffin.' },
+    alt:   { zh: '大鍋子或深湯鍋也可以替代攪拌盆，效果一樣好。', en: 'A large saucepan or stock pot works just as well — size matters more than shape here.' },
+  },
+  {
+    key: 'fork_masher', emoji: '🍴', essential: true,
+    name:  { zh: '叉子或壓泥器', en: 'Fork or Potato Masher' },
+    why:   { zh: '用來壓碎熟香蕉。越熟的香蕉（表皮有黑斑）越容易壓，也越甜。', en: 'For mashing the bananas. The riper the banana — black spots and all — the easier and sweeter the mash.' },
+    alt:   { zh: '將香蕉裝入密封袋中，用手直接揉壓；或用湯匙背面在碗邊壓碎。', en: 'Seal banana in a zip-lock bag and squish by hand, or press with the back of a spoon against the bowl.' },
+  },
+  {
+    key: 'whisk', emoji: '🫙', essential: false,
+    name:  { zh: '打蛋器', en: 'Whisk' },
+    why:   { zh: '快速混合牛奶、雞蛋、油，讓濕性材料充分乳化、結合均勻。', en: 'Blends milk, egg, and oil together quickly so the wet mixture emulsifies evenly.' },
+    alt:   { zh: '用叉子攪拌即可，多花一點時間，效果一樣。沒有也不影響成品。', en: 'A fork works perfectly — just takes a little longer. The muffins will still turn out great.' },
+  },
+  {
+    key: 'spatula', emoji: '🥄', essential: true,
+    name:  { zh: '橡皮刮刀或木勺', en: 'Rubber Spatula or Wooden Spoon' },
+    why:   { zh: '拌合濕乾材料時要用翻折手法，這類工具最適合——不容易過度攪拌，還能刮乾淨盆底。', en: 'The folding motion needs a flexible scraper or spoon — it lets you combine without overworking the batter.' },
+    alt:   { zh: '任何大湯匙都可以代替，注意手法輕柔即可——重點在技巧，不在工具。', en: 'Any large spoon works — the technique matters more than the tool. Gentle fold, not stir.' },
+  },
+  {
+    key: 'pan', emoji: '🧁', essential: true,
+    name:  { zh: '馬芬模具（長方形 / 標準 / 迷你）', en: 'Muffin Pan — Rect / Standard / Mini' },
+    why:   { zh: '決定馬芬形狀與大小。本食譜三種尺寸都支援，份量會自動換算。', en: 'Shapes the muffins. This recipe supports all three sizes — amounts adjust automatically when you change the mold.' },
+    alt:   { zh: '矽膠模（Silicone mould）和小烤皿（ramekins）也可以。沒有紙杯時，記得在模具內壁抹油防沾。', en: 'Silicone moulds or ceramic ramekins work well. Without liners, grease each cup generously with butter or oil.' },
+  },
+  {
+    key: 'liners', emoji: '📄', essential: false,
+    name:  { zh: '馬芬紙杯（烘焙用）', en: 'Muffin Paper Liners' },
+    why:   { zh: '防沾黏、方便脫模，清洗更輕鬆。馬芬外形也會更整齊。', en: 'Prevents sticking, makes removal effortless, and keeps the sides of the muffins tidy.' },
+    alt:   { zh: '在模具內壁均勻抹上奶油或食用油，再撒少量麵粉，脫模效果與紙杯相當。', en: 'Brush each cup with butter or oil, then dust with a pinch of flour — works just as well as liners.' },
+  },
+  {
+    key: 'measuring', emoji: '📏', essential: true,
+    name:  { zh: '量杯與量匙', en: 'Measuring Cups & Spoons' },
+    why:   { zh: '確保比例正確，特別是泡打粉和小蘇打——這兩樣份量差一點，馬芬的蓬鬆度就會差很多。', en: 'Precision matters most for baking powder and baking soda — a little off here noticeably affects the rise.' },
+    alt:   { zh: '有廚房秤更準！食譜已標示公克數，用秤量比用量杯重複性更高。', en: 'A kitchen scale is more accurate — gram weights are listed in the recipe and give more consistent results.' },
+  },
+  {
+    key: 'scale', emoji: '⚖️', essential: false,
+    name:  { zh: '廚房秤（選用）', en: 'Kitchen Scale (optional)' },
+    why:   { zh: '重量比體積更精準，特別推薦給想要每次都穩定成功的烘焙初學者。', en: 'Weighing ingredients is more precise than volume — highly recommended if you want consistent results every time.' },
+    alt:   { zh: '沒有秤完全沒關係，用量杯做出來一樣好吃，只是每次成果可能略有差異。', en: 'No scale? Cup measurements are totally fine for this recipe — results may just vary slightly each time.' },
+  },
+  {
+    key: 'oven', emoji: '🔥', essential: true,
+    name:  { zh: '烤箱（需可預熱）', en: 'Oven — must be preheatable' },
+    why:   { zh: '需要預熱至 180°C（350°F）。入爐瞬間的高溫讓馬芬表面快速定型並膨起。', en: 'Preheat to 180°C (350°F). The burst of heat when the pan enters is what gives muffins their domed top.' },
+    alt:   { zh: '氣炸鍋可以代替！設定 160°C，時間縮短約 5–8 分鐘，注意不要上色過快。', en: 'An air fryer works! Set to 160°C and reduce bake time by 5–8 min — watch closely to avoid over-browning.' },
+  },
+  {
+    key: 'toothpick', emoji: '🪥', essential: true,
+    name:  { zh: '竹籤或牙籤', en: 'Toothpick or Skewer' },
+    why:   { zh: '插入中心取出無沾黏表示熟透，是最可靠的判斷方式，比看顏色更準確。', en: 'The most reliable doneness test — insert into the centre; a clean pull means done. More accurate than colour alone.' },
+    alt:   { zh: '細筷子、刀尖、蛋糕測試針皆可代替。輕按馬芬頂部會回彈，也是熟透的訊號。', en: 'A thin chopstick, knife tip, or cake tester works just as well. The top should also spring back when lightly pressed.' },
+  },
+  {
+    key: 'rack', emoji: '🕸️', essential: false,
+    name:  { zh: '冷卻架（選用）', en: 'Cooling Rack (optional)' },
+    why:   { zh: '出爐後架高散熱，底部不悶蒸，避免馬芬底部因水蒸氣積聚而變得溼軟。', en: 'Elevates the muffins after baking so steam escapes from below — prevents soggy bottoms.' },
+    alt:   { zh: '放在乾燥的廚房紙巾上，稍微錯開排列讓底部透氣，效果接近。', en: 'Place on dry paper towels with slight gaps between muffins for airflow — a reasonable substitute.' },
+  },
+];
+
 // ── INGREDIENT GROUPS ──
 const INGREDIENT_GROUPS = [
   {
@@ -1632,6 +2239,9 @@ function applyLang() {
   if (secIng) secIng.textContent = isEn ? 'Ingredients' : '食材清單 Ingredients';
   const secStep = document.getElementById('section-steps');
   if (secStep) secStep.textContent = isEn ? 'Steps' : '步驟 Steps';
+  const secTools = document.getElementById('section-tools');
+  if (secTools) secTools.textContent = isEn ? 'Tools' : '工具清單 Tools';
+  applyToolsState();
   const sheetTitle = document.getElementById('shop-sheet-title');
   if (sheetTitle) sheetTitle.textContent = isEn ? '🛒 Shopping List' : '🛒 採購清單';
   const btnText = document.querySelector('.shop-back-btn .btn-text');
@@ -1698,6 +2308,63 @@ function renderNotes() {
   card.innerHTML = NOTES.map(n =>
     `<div class="note-item"><span class="note-icon">${n.icon}</span><span>${n[lang]}</span></div>`
   ).join('');
+}
+
+function renderTools() {
+  const card = document.getElementById('tools-card');
+  if (!card) return;
+  const isEn = lang === 'en';
+  card.innerHTML = TOOLS.map(t => {
+    const badge = t.essential
+      ? `<span class="tool-badge essential">${isEn ? 'Essential' : '必備'}</span>`
+      : `<span class="tool-badge optional">${isEn ? 'Optional' : '選用'}</span>`;
+    return `
+      <div class="tool-item">
+        <div class="tool-emoji">${t.emoji}</div>
+        <div class="tool-body">
+          <div class="tool-header">
+            <div class="tool-name">${t.name[lang]}</div>
+            ${badge}
+          </div>
+          <div class="tool-why">${t.why[lang]}</div>
+          <div class="tool-alt">
+            <span class="tool-alt-label">${isEn ? 'Alt:' : '替代：'}</span>
+            <span>${t.alt[lang]}</span>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── TOOLS TOGGLE ──
+const TOOLS_OPEN_KEY = 'landie-tools-open';
+
+function isToolsOpen() {
+  return localStorage.getItem(TOOLS_OPEN_KEY) === 'true';
+}
+
+function toggleToolsSection() {
+  const nowOpen = !isToolsOpen();
+  localStorage.setItem(TOOLS_OPEN_KEY, String(nowOpen));
+  applyToolsState();
+}
+
+function applyToolsState() {
+  const section = document.getElementById('tools-section');
+  const hint    = document.getElementById('tools-toggle-hint');
+  const meta    = document.getElementById('tools-toggle-meta');
+  if (!section) return;
+  const open   = isToolsOpen();
+  const isEn   = lang === 'en';
+  const nEss   = TOOLS.filter(t => t.essential).length;
+  const nOpt   = TOOLS.filter(t => !t.essential).length;
+  section.classList.toggle('open', open);
+  if (hint) hint.textContent = open
+    ? (isEn ? 'Collapse' : '收起')
+    : (isEn ? 'View tools' : '查看工具');
+  if (meta) meta.textContent = isEn
+    ? `${nEss} Essential · ${nOpt} Optional`
+    : `${nEss} 必備・${nOpt} 選用`;
 }
 
 // ── TIMER ──
@@ -2219,7 +2886,6 @@ function renderIngredients() {
       html += `
         <div ${attrs}>
           ${inSelectMode ? `<div class="ing-card-check">${have ? ICONS.check : ''}</div>` : ''}
-          <span class="ing-emoji">${ing.emoji}</span>
           <div class="ing-name">${ingName(ing.key)}</div>
           <div class="ing-cup">${m.cup}</div>
           <div class="ing-weight">${m.weight}</div>
@@ -2247,6 +2913,30 @@ function renderIngredients() {
   }
 
   card.innerHTML = html;
+
+  // ── POPULATE PRINT TEXT INGREDIENT LIST ──
+  const printList = document.getElementById('print-ing-list');
+  if (printList) {
+    let pHtml = '';
+    INGREDIENT_GROUPS.forEach(group => {
+      const groupLabel = isEn ? group.labelEn : `${group.label}`;
+      const groupSub   = isEn ? '' : ` ${group.labelEn}`;
+      pHtml += `<div class="print-ing-group">
+        <div class="print-ing-group-title">${groupLabel}${groupSub}</div>
+        <ul class="print-ing-ul">`;
+      group.items.forEach(ing => {
+        const m = fmtMeasure(ing.key);
+        const name = ingName(ing.key);
+        const measure = m.cup ? `${m.cup}${m.weight ? ' / ' + m.weight : ''}` : m.weight;
+        pHtml += `<li class="print-ing-item">
+          <span class="print-ing-name">${name}</span>
+          <span class="print-ing-measure">${measure}</span>
+        </li>`;
+      });
+      pHtml += `</ul></div>`;
+    });
+    printList.innerHTML = pHtml;
+  }
 }
 
 function setShopMode(mode) {
@@ -2374,43 +3064,137 @@ function hideSubsPopover() {
 }
 
 // ── I MADE THIS ──
-const MADE_KEY = 'landie-made-muffins';
+// ── I MADE THIS ──
+const MADE_KEY  = 'landie-made-muffins';
+const REACT_KEY = 'landie-reactions-muffins';
+const REACT_SEED = { party: 47, clap: 31, heart: 62 };
 const CONFETTI_COLORS = ['#C4956A','#A8B5A0','#5C4033','#E8D5BE','#D4DDCF','#FAD384','#f4a460'];
 
-function getMadeData() {
-  try { return JSON.parse(localStorage.getItem(MADE_KEY)); } catch { return null; }
+// ── BADGES ──
+const BADGES = [
+  { id: 'first-bake',  emoji: '🧁', zh: '初次出爐',  en: 'First Bake',   req: d => d.count >= 1 },
+  { id: 'baker-3',     emoji: '🏅', zh: '三度出爐',  en: '3 Bakes',      req: d => d.count >= 3 },
+  { id: 'baker-5',     emoji: '🥇', zh: '五度出爐',  en: '5 Bakes',      req: d => d.count >= 5 },
+  { id: 'week-streak', emoji: '🔥', zh: '週週烘焙',  en: 'Week Streak',  req: d => hasWeekStreak(d.dates || []) },
+];
+function hasWeekStreak(dates) {
+  const days = [...new Set(dates.map(d => new Date(d).toDateString()))].sort();
+  if (days.length < 7) return false;
+  for (let i = 0; i <= days.length - 7; i++) {
+    let ok = true;
+    for (let j = 1; j < 7; j++) {
+      if ((new Date(days[i+j]) - new Date(days[i+j-1])) / 86400000 !== 1) { ok = false; break; }
+    }
+    if (ok) return true;
+  }
+  return false;
 }
+
+function getMadeData() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(MADE_KEY));
+    if (!raw) return null;
+    // Migrate legacy { date: '...' } format → new format
+    if (!raw.count) return { count: 1, dates: [raw.date || new Date().toISOString()] };
+    if (!raw.dates) raw.dates = [raw.date || new Date().toISOString()];
+    return raw;
+  } catch { return null; }
+}
+function getReactions() {
+  try { return JSON.parse(localStorage.getItem(REACT_KEY)) || { party: 0, clap: 0, heart: 0 }; }
+  catch { return { party: 0, clap: 0, heart: 0 }; }
+}
+
 function handleMadeBtn() {
-  if (getMadeData()) {
-    localStorage.removeItem(MADE_KEY);
-  } else {
-    localStorage.setItem(MADE_KEY, JSON.stringify({ date: new Date().toISOString() }));
+  let data = getMadeData();
+  if (!data) {
+    data = { count: 1, dates: [new Date().toISOString()] };
+    localStorage.setItem(MADE_KEY, JSON.stringify(data));
     fireConfetti();
+    setTimeout(() => showBadgeToast(data, 0), 1000);
   }
   updateMadeBtn();
 }
+function handleMadeAgain() {
+  let data = getMadeData();
+  if (!data) return;
+  const prev = data.count;
+  data.count += 1;
+  data.dates.push(new Date().toISOString());
+  localStorage.setItem(MADE_KEY, JSON.stringify(data));
+  fireConfetti();
+  setTimeout(() => showBadgeToast(data, prev), 1000);
+  updateMadeBtn();
+}
+function showBadgeToast(data, prevCount) {
+  const newOnes = BADGES.filter(b => b.req(data) && !b.req({ count: prevCount, dates: (data.dates || []).slice(0, -1) }));
+  if (newOnes.length) {
+    const msg = newOnes.map(b => b.emoji + ' ' + (lang === 'en' ? b.en : b.zh)).join('・');
+    showToast((lang === 'en' ? '🏆 Badge unlocked: ' : '🏆 解鎖徽章：') + msg);
+  }
+}
+
+function addReaction(type) {
+  const r = getReactions();
+  r[type] = (r[type] || 0) + 1;
+  localStorage.setItem(REACT_KEY, JSON.stringify(r));
+  updateReactions();
+  const btn = document.getElementById('react-btn-' + type);
+  if (btn) {
+    btn.classList.remove('reaction-pop');
+    void btn.offsetWidth; // reflow to restart animation
+    btn.classList.add('reaction-pop');
+  }
+}
+function updateReactions() {
+  const r = getReactions();
+  ['party', 'clap', 'heart'].forEach(t => {
+    const el = document.getElementById('react-count-' + t);
+    if (el) el.textContent = REACT_SEED[t] + (r[t] || 0);
+  });
+}
+
 function updateMadeBtn() {
-  const data = getMadeData();
-  const btn   = document.getElementById('made-btn');
-  const label = document.getElementById('made-label');
-  const icon  = document.getElementById('made-icon');
-  const dateEl = document.getElementById('made-date');
+  const data     = getMadeData();
+  const btn      = document.getElementById('made-btn');
+  const label    = document.getElementById('made-label');
+  const icon     = document.getElementById('made-icon');
+  const statsEl  = document.getElementById('made-stats');
+  const countNum = document.getElementById('made-count-num');
+  const countLbl = document.getElementById('made-count-label');
+  const dateEl   = document.getElementById('made-date');
+  const badgesEl = document.getElementById('made-badges');
+  const againLbl = document.getElementById('made-again-label');
+  const reactLbl = document.getElementById('made-reactions-label');
   if (!btn) return;
   const isEn = lang === 'en';
   if (data) {
     btn.classList.add('made-done');
     icon.textContent  = '✓';
     label.textContent = isEn ? 'Made it!' : '已完成！';
-    const d = new Date(data.date);
-    dateEl.textContent = (isEn ? 'Made on ' : '完成於 ') + d.toLocaleDateString(isEn ? 'en-US' : 'zh-TW');
-    dateEl.style.display = 'block';
+    if (statsEl) statsEl.style.display = '';
+    if (countNum) countNum.textContent = data.count;
+    if (countLbl) countLbl.textContent = isEn ? (data.count === 1 ? 'bake' : 'bakes') : '次烘焙';
+    const lastDate = new Date(data.dates[data.dates.length - 1]);
+    if (dateEl) dateEl.textContent = (isEn ? 'Last baked ' : '最近烘焙 ') + lastDate.toLocaleDateString(isEn ? 'en-US' : 'zh-TW');
+    if (againLbl) againLbl.textContent = isEn ? '+ Baked Again' : '+ 再做一次';
   } else {
     btn.classList.remove('made-done');
     icon.textContent  = '🎉';
     label.textContent = isEn ? 'I Made This!' : '我做了！';
-    dateEl.style.display = 'none';
+    if (statsEl) statsEl.style.display = 'none';
   }
+  // Render badges (always — greyed until earned)
+  if (badgesEl) {
+    badgesEl.innerHTML = BADGES.map(b => {
+      const earned = data && b.req(data);
+      return `<span class="made-badge${earned ? ' earned' : ''}">${b.emoji} <span>${isEn ? b.en : b.zh}</span></span>`;
+    }).join('');
+  }
+  if (reactLbl) reactLbl.textContent = isEn ? 'Cheer for this recipe' : '為食譜鼓掌';
+  updateReactions();
 }
+
 function fireConfetti() {
   for (let i = 0; i < 64; i++) {
     const el = document.createElement('div');
@@ -2463,9 +3247,25 @@ function render() {
   document.getElementById('qty-unit').textContent = ul;
   document.getElementById('serving-summary').textContent = t.summary(state.qty, lang);
 
+  // ── UPDATE PRINT META BLOCK ──
+  const pmPrep    = document.getElementById('print-meta-prep');
+  const pmBake    = document.getElementById('print-meta-bake');
+  const pmUnit    = document.getElementById('print-meta-unit');
+  const pmSummary = document.getElementById('print-meta-summary');
+  if (pmPrep)    pmPrep.innerHTML    = isEn ? '<strong>Prep</strong> 10 min' : '<strong>準備</strong> 10 分鐘';
+  if (pmBake)    pmBake.innerHTML    = isEn ? '<strong>Bake</strong> 18–26 min' : '<strong>烘烤</strong> 18–26 分鐘';
+  if (pmUnit)    pmUnit.innerHTML    = isEn ? `<strong>${state.unit}</strong>` : `<strong>${state.unit}</strong> 重量單位`;
+  if (pmSummary) pmSummary.textContent = t.summary(state.qty, lang);
+  // ── UPDATE PRINT SECTION HEADINGS ──
+  const pIngH  = document.getElementById('print-ing-heading');
+  const pStpH  = document.getElementById('print-steps-heading');
+  if (pIngH) pIngH.textContent = isEn ? 'Ingredients' : '食材清單 Ingredients';
+  if (pStpH) pStpH.textContent = isEn ? 'Steps' : '步驟 Steps';
+
   renderIngredients();
   if (shopMode === 'list') renderShopSheet();
   renderNotes();
+  renderTools();
   applyLang();
 
   const wrapper = document.getElementById('steps-wrapper');
@@ -2483,7 +3283,6 @@ function render() {
         <div class="step-num">${step.num}</div>
         <div style="flex:1">
           <div class="step-title-text">${step.title[lang]}</div>
-          ${isEn ? '' : `<div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${step.title['en']}</div>`}
         </div>
         <span class="step-diff-pill ${step.difficulty}" data-tip="${diffTip}">${diffLabel}</span>
       </div>
@@ -2571,35 +3370,42 @@ renderGallery();
 updateKeyStatus();
 updateMadeBtn();
 
-// ── GLOSSARY TOOLTIP INIT ──
-(function() {
-  const tip = document.getElementById('gloss-tooltip');
-  function show(el) {
-    const g = GLOSSARY[el.dataset.term]; if (!g) return;
-    tip.innerHTML = `
-      <div class="gloss-term-zh">${g.zh.term}</div>
-      <div class="gloss-term-en">${g.en.term}</div>
-      <div class="gloss-def-zh">${g.zh.def}</div>
-      <div class="gloss-def-en">${g.en.def}</div>`;
-    const r = el.getBoundingClientRect();
-    const w = 280, margin = 8;
-    let left = r.left + r.width / 2 - w / 2;
-    left = Math.max(margin, Math.min(left, window.innerWidth - w - margin));
-    tip.style.left = left + 'px';
-    tip.style.top  = (r.bottom + 8) + 'px';
-    tip.style.display = 'block';
-  }
-  function hide() { tip.style.display = 'none'; }
-  document.addEventListener('mouseover', e => { const g = e.target.closest('.gloss'); if (g) show(g); });
-  document.addEventListener('mouseout',  e => { if (!e.target.closest('.gloss')) hide(); });
-  document.addEventListener('click', e => {
-    const g = e.target.closest('.gloss');
-    if (g) { show(g); return; }
-    if (!e.target.closest('#subs-popover') && !e.target.closest('.sub-btn')) hideSubsPopover();
-    hide();
-  });
-  document.addEventListener('scroll', hide, true);
-})();
+// ── GLOSSARY TOOLTIP ──
+function _glossShow(el) {
+  const t = document.getElementById('gloss-tooltip'); if (!t) return;
+  const g = GLOSSARY[el.dataset.term]; if (!g) return;
+  t.innerHTML =
+    `<div class="gloss-term-zh">${g.zh.term}</div>` +
+    `<div class="gloss-term-en">${g.en.term}</div>` +
+    `<div class="gloss-def-zh">${g.zh.def}</div>` +
+    `<div class="gloss-def-en">${g.en.def}</div>`;
+  const r = el.getBoundingClientRect();
+  const w = 280, margin = 8;
+  let left = r.left + r.width / 2 - w / 2;
+  left = Math.max(margin, Math.min(left, window.innerWidth - w - margin));
+  t.style.display = 'block';
+  const h = t.offsetHeight;
+  const spaceBelow = window.innerHeight - r.bottom - margin;
+  const top = spaceBelow >= h ? r.bottom + 8 : r.top - h - 8;
+  t.style.left = left + 'px';
+  t.style.top  = Math.max(margin, top) + 'px';
+}
+function _glossHide() {
+  const t = document.getElementById('gloss-tooltip'); if (t) t.style.display = 'none';
+}
+document.addEventListener('mouseover', function(e) {
+  const g = e.target.closest('.gloss'); if (g) _glossShow(g);
+});
+document.addEventListener('mouseout', function(e) {
+  if (!e.target.closest('.gloss')) _glossHide();
+});
+document.addEventListener('click', function(e) {
+  const g = e.target.closest('.gloss');
+  if (g) { _glossShow(g); return; }
+  if (!e.target.closest('#subs-popover') && !e.target.closest('.sub-btn')) hideSubsPopover();
+  _glossHide();
+});
+document.addEventListener('scroll', _glossHide, true);
 
 // ── STEP DIFFICULTY TOOLTIP (JS-driven, immune to overflow:hidden) ──
 (function() {
