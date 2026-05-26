@@ -337,6 +337,17 @@
         <button class="filter-pill"        data-diff="hard"   onclick="setFilter('diff','hard')">🔴 進階</button>
       </div>
     </div>
+    <div class="filter-row">
+      <span class="filter-label" id="filter-label-tag">標籤</span>
+      <div class="filter-pills" id="tag-pills">
+        <button class="filter-pill active" data-tag="all"              onclick="setFilter('tag','all')">全部</button>
+        <button class="filter-pill"        data-tag="no-refined-sugar" onclick="setFilter('tag','no-refined-sugar')">無精製糖</button>
+        <button class="filter-pill"        data-tag="freezer-friendly" onclick="setFilter('tag','freezer-friendly')">可冷凍</button>
+        <button class="filter-pill"        data-tag="kid-friendly"     onclick="setFilter('tag','kid-friendly')">親子友善</button>
+        <button class="filter-pill"        data-tag="gift-friendly"    onclick="setFilter('tag','gift-friendly')">送禮首選</button>
+        <button class="filter-pill"        data-tag="crispy"           onclick="setFilter('tag','crispy')">酥脆</button>
+      </div>
+    </div>
   </div>
 
   <!-- Results bar -->
@@ -362,7 +373,7 @@
 let lang = 'zh';
 const FONT_SIZES = [0.9, 1, 1.12];
 let fontSize = 1;
-let activeFilters = { cat: 'all', diff: 'all' };
+let activeFilters = { cat: 'all', diff: 'all', tag: 'all' };
 let recipes = [];
 
 // ── UI strings ──
@@ -398,8 +409,17 @@ const UI = {
     nobake: { zh: '免烤',  en: 'No-Bake' },
     savory: { zh: '鹹食',  en: 'Savory' },
   },
-  made:   { zh: '✓ 做過了',  en: '✓ Made it' },
-  footer: { zh: 'Landie Recipe · 用心做，用愛分享', en: 'Landie Recipe · Made with heart' },
+  made:      { zh: '✓ 做過了',  en: '✓ Made it' },
+  footer:    { zh: 'Landie Recipe · 用心做，用愛分享', en: 'Landie Recipe · Made with heart' },
+  filterTag: { zh: '標籤', en: 'Tag' },
+  tagAll:    { zh: '全部', en: 'All' },
+  tagLabels: {
+    'no-refined-sugar': { zh: '無精製糖', en: 'No refined sugar' },
+    'freezer-friendly': { zh: '可冷凍',   en: 'Freezer-friendly' },
+    'kid-friendly':     { zh: '親子友善', en: 'Kid-friendly' },
+    'gift-friendly':    { zh: '送禮首選', en: 'Gift-friendly' },
+    'crispy':           { zh: '酥脆',     en: 'Crispy' },
+  },
 };
 
 // ── Fallback data (for file:// or offline use) ──
@@ -443,18 +463,18 @@ async function loadRecipes() {
 // ── Filter ──
 function getVisible() {
   return recipes.filter(r => {
-    const catOk  = activeFilters.cat  === 'all' || r.category   === activeFilters.cat;
-    const diffOk = activeFilters.diff === 'all' || r.difficulty  === activeFilters.diff;
-    return catOk && diffOk;
+    const catOk  = activeFilters.cat  === 'all' || r.category  === activeFilters.cat;
+    const diffOk = activeFilters.diff === 'all' || r.difficulty === activeFilters.diff;
+    const tagOk  = activeFilters.tag  === 'all' || (r.tags || []).includes(activeFilters.tag);
+    return catOk && diffOk && tagOk;
   });
 }
 
 function setFilter(type, value) {
   activeFilters[type] = value;
-  const pillId = type === 'cat' ? 'cat-pills' : 'diff-pills';
-  const dataKey = type === 'cat' ? 'cat' : 'diff';
+  const pillId = type === 'cat' ? 'cat-pills' : type === 'diff' ? 'diff-pills' : 'tag-pills';
   document.querySelectorAll(`#${pillId} .filter-pill`).forEach(p =>
-    p.classList.toggle('active', p.dataset[dataKey] === value));
+    p.classList.toggle('active', p.dataset[type] === value));
   renderGrid();
 }
 
@@ -542,6 +562,15 @@ function applyLang() {
     p.textContent    = UI[DIFF_UI[i]][lang];
     p.dataset.diff   = DIFF_KEYS[i];
     p.classList.toggle('active', DIFF_KEYS[i] === activeFilters.diff);
+  });
+
+  document.getElementById('filter-label-tag').textContent = UI.filterTag[lang];
+  const TAG_KEYS = ['all','no-refined-sugar','freezer-friendly','kid-friendly','gift-friendly','crispy'];
+  document.querySelectorAll('#tag-pills .filter-pill').forEach((p, i) => {
+    const k = TAG_KEYS[i];
+    p.textContent = k === 'all' ? UI.tagAll[lang] : (UI.tagLabels[k]?.[lang] || k);
+    p.dataset.tag = k;
+    p.classList.toggle('active', k === activeFilters.tag);
   });
 
   renderGrid();

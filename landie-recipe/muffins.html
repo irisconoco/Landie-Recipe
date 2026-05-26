@@ -558,12 +558,139 @@
   .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(16px); background: var(--brown); color: white; padding: 10px 22px; border-radius: 100px; font-size: 13px; opacity: 0; pointer-events: none; transition: all 0.3s ease; z-index: 999; box-shadow: 0 4px 16px rgba(92,64,51,0.25); }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+  /* ── PRINT BUTTON ── */
+  .print-btn {
+    display: flex; align-items: center; gap: 5px; padding: 7px 14px;
+    background: var(--card-bg); border: 1px solid var(--oat-light); border-radius: 100px;
+    font-family: 'Noto Sans TC', sans-serif; font-size: 12px; color: var(--text-light);
+    cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 6px rgba(92,64,51,0.07);
+    white-space: nowrap;
+  }
+  .print-btn:hover { color: var(--brown); border-color: var(--oat); background: var(--oat-light); }
+  .print-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+  /* ── GLOSSARY ── */
+  .gloss { border-bottom: 1.5px dotted var(--oat-dark); cursor: help; display: inline; }
+  #gloss-tooltip {
+    position: fixed; z-index: 600;
+    background: var(--card-bg); border: 1px solid var(--oat-light);
+    border-radius: var(--radius-sm); box-shadow: 0 8px 32px rgba(92,64,51,0.18);
+    padding: 14px 16px; max-width: 280px; pointer-events: none;
+    animation: fadeUp 0.18s ease;
+  }
+  .gloss-term-zh { font-size: 13px; font-weight: 600; color: var(--brown); margin-bottom: 1px; }
+  .gloss-term-en { font-size: 11px; color: var(--text-muted); margin-bottom: 7px; font-style: italic; }
+  .gloss-def-zh { font-size: 12px; color: var(--text); line-height: 1.65; margin-bottom: 5px; }
+  .gloss-def-en { font-size: 11px; color: var(--text-light); line-height: 1.6; }
+
+  /* ── SUBSTITUTION HELPER ── */
+  .sub-btn {
+    position: absolute; top: 6px; right: 6px;
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1px solid var(--oat-light); background: var(--card-bg);
+    color: var(--oat-dark); font-size: 11px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.18s; z-index: 2; flex-shrink: 0;
+  }
+  .sub-btn:hover { background: var(--oat-light); border-color: var(--oat); }
+  .subs-popover {
+    position: fixed; z-index: 700; min-width: 280px; max-width: 320px;
+    background: var(--card-bg); border: 1px solid var(--oat-light);
+    border-radius: var(--radius-sm); box-shadow: 0 8px 32px rgba(92,64,51,0.18);
+    padding: 0; overflow: hidden; animation: fadeUp 0.2s ease;
+  }
+  .subs-popover-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 14px 10px; border-bottom: 1px solid var(--oat-light);
+    background: linear-gradient(135deg, #FFF8F0, #F5F8F3);
+  }
+  .subs-popover-title { font-size: 12px; font-weight: 600; color: var(--brown); }
+  .subs-close-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; padding: 2px 6px; }
+  .sub-item { padding: 10px 14px; border-bottom: 1px solid var(--oat-light); }
+  .sub-item:last-child { border-bottom: none; }
+  .sub-name { font-size: 12px; font-weight: 600; color: var(--brown); display: flex; align-items: center; gap: 6px; }
+  .sub-ratio { font-size: 10px; font-weight: 500; background: var(--oat-light); color: var(--oat-dark); padding: 1px 6px; border-radius: 100px; }
+  .sub-note { font-size: 11px; color: var(--text-light); margin-top: 2px; line-height: 1.5; }
+
+  /* ── STEP DIFFICULTY BADGE ── */
+  .step-diff-pill {
+    flex-shrink: 0; padding: 3px 9px; border-radius: 100px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+    cursor: default; white-space: nowrap; position: relative; align-self: flex-start; margin-top: 2px;
+  }
+  .step-diff-pill.easy      { background: #e8f8f0; color: #2d8a5e; }
+  .step-diff-pill.watch-out { background: #fef3de; color: #b07a1a; }
+  .step-diff-pill.tricky    { background: #fdecea; color: #b94534; }
+  .step-diff-pill::after {
+    content: attr(data-tip);
+    position: absolute; bottom: calc(100% + 6px); right: 0;
+    background: var(--brown); color: #fff;
+    font-size: 11px; font-weight: 400; padding: 6px 10px;
+    border-radius: 8px; white-space: normal; width: 180px;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    line-height: 1.5; z-index: 10;
+  }
+  .step-diff-pill:hover::after { opacity: 1; }
+
+  /* ── I MADE THIS ── */
+  .made-section { text-align: center; margin: 28px 0; }
+  .made-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 32px; border-radius: 100px;
+    background: linear-gradient(135deg, var(--oat), var(--oat-dark));
+    border: none; color: #fff; font-family: 'Noto Sans TC', sans-serif;
+    font-size: 16px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(196,149,106,0.4);
+    transition: all 0.25s ease; letter-spacing: 0.03em;
+  }
+  .made-btn:hover { transform: scale(1.04); box-shadow: 0 6px 28px rgba(196,149,106,0.5); }
+  .made-btn.made-done {
+    background: linear-gradient(135deg, #4caf82, #2d8a5e);
+    box-shadow: 0 4px 20px rgba(76,175,130,0.4);
+  }
+  .made-date { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+
+  /* ── CONFETTI ── */
+  .confetti-piece {
+    position: fixed; top: -12px; z-index: 9999; pointer-events: none;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall {
+    0%   { transform: translateY(0)     rotate(0deg);   opacity: 1; }
+    100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+  }
+
   /* ── PRINT ── */
   @media print {
-    body * { visibility: hidden; }
-    .print-area, .print-area * { visibility: visible; }
-    .print-area { position: fixed; left: 0; top: 0; right: 0; padding: 32px; }
-    .shop-sheet-footer, .shop-back-btn, .shop-close-btn { display: none !important; }
+    body:not(.printing-shopping) .recipe-nav,
+    body:not(.printing-shopping) .util-bar,
+    body:not(.printing-shopping) .control-panel,
+    body:not(.printing-shopping) .shop-entry-btn,
+    body:not(.printing-shopping) .shop-generate-btn,
+    body:not(.printing-shopping) .select-banner,
+    body:not(.printing-shopping) #section-gallery,
+    body:not(.printing-shopping) .gallery-upload,
+    body:not(.printing-shopping) .gallery-apikey-row,
+    body:not(.printing-shopping) .gallery-key-bar,
+    body:not(.printing-shopping) .gallery-entries,
+    body:not(.printing-shopping) .made-section,
+    body:not(.printing-shopping) .notes-card,
+    body:not(.printing-shopping) .toast,
+    body:not(.printing-shopping) .timer-fullscreen,
+    body:not(.printing-shopping) .shop-overlay { display: none !important; }
+    body:not(.printing-shopping) .container { padding: 16px !important; }
+    body:not(.printing-shopping) .hero { box-shadow: none !important; border: 1px solid #ddd !important; }
+    body:not(.printing-shopping) .step-card { box-shadow: none !important; break-inside: avoid; border: 1px solid #eee !important; }
+    body:not(.printing-shopping) .ingredients-card { box-shadow: none !important; }
+    body:not(.printing-shopping) .sub-btn { display: none !important; }
+    body:not(.printing-shopping) .step-diff-pill::after { display: none !important; }
+    body.printing-shopping * { visibility: hidden; }
+    body.printing-shopping .print-area,
+    body.printing-shopping .print-area * { visibility: visible; }
+    body.printing-shopping .print-area { position: fixed; left: 0; top: 0; right: 0; padding: 32px; }
+    body.printing-shopping .shop-sheet-footer,
+    body.printing-shopping .shop-back-btn,
+    body.printing-shopping .shop-close-btn { display: none !important; }
   }
 
   /* ── SECTIONS ── */
@@ -1056,6 +1183,10 @@
       <button class="font-btn" id="font-dec" onclick="changeFontSize(-1)" title="縮小字體"><span class="fa">A</span><span class="fs">−</span></button>
       <button class="font-btn" id="font-inc" onclick="changeFontSize(1)" title="放大字體"><span class="fa">A</span><span class="fs">+</span></button>
     </div>
+    <button class="print-btn" id="print-btn" onclick="window.print()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      <span id="print-btn-label">列印食譜</span>
+    </button>
   </div>
 
   <!-- HERO -->
@@ -1131,6 +1262,15 @@
 
   <!-- NOTES -->
   <div class="notes-card" id="notes-card"><!-- JS rendered --></div>
+
+  <!-- I MADE THIS -->
+  <div class="made-section" id="made-section">
+    <button class="made-btn" id="made-btn" onclick="handleMadeBtn()">
+      <span id="made-icon">🎉</span>
+      <span id="made-label">我做了！ I Made This!</span>
+    </button>
+    <div class="made-date" id="made-date" style="display:none"></div>
+  </div>
 
   <!-- GALLERY -->
   <div class="section-title" id="section-gallery" style="margin-top:28px;">🍳 作品記錄 My Creations</div>
@@ -1241,39 +1381,122 @@ const TYPES = {
       : `${q} 個迷你馬芬 ＝ ${Math.round(q/12*10)/10} 個長方形模 ＝ ${Math.round(q/3)} 個標準馬芬` },
 };
 
+// ── TECHNIQUE GLOSSARY ──
+const GLOSSARY = {
+  fold:             { zh:{term:'拌合',def:'用刮刀輕輕從底部往上翻，不畫圈，保留空氣讓馬芬更蓬鬆。就像翻書頁，而不是攪拌湯。'}, en:{term:'fold',def:'Lift batter from the bottom with a spatula, turning it over without stirring — keeps air in for a lighter muffin. Think turning pages, not stirring soup.'} },
+  whisk:            { zh:{term:'攪打',def:'用打蛋器快速混合材料，同時打入空氣。'}, en:{term:'whisk',def:'Use a whisk to mix quickly and incorporate air at the same time.'} },
+  combine:          { zh:{term:'混合',def:'將兩種或多種材料拌在一起，直到看不見各自的分界線。'}, en:{term:'combine',def:'Mix ingredients together until no distinct layers or streaks remain.'} },
+  overmix:          { zh:{term:'過度攪拌',def:'攪拌太多會讓麵粉產生過多麩質，馬芬口感變硬、有橡皮感。拌到看不見粉就停！'}, en:{term:'overmix',def:'Overworking the batter builds excess gluten, making muffins dense and rubbery. Stop when flour just disappears.'} },
+  preheat:          { zh:{term:'預熱',def:'烤前先讓烤箱達到目標溫度，確保一放入就開始均勻加熱。'}, en:{term:'preheat',def:'Bring the oven to target temperature before baking so heat is even from the moment the pan goes in.'} },
+  batter:           { zh:{term:'麵糊',def:'烘焙前的液態混合物，烤後會凝固成成品。'}, en:{term:'batter',def:'The pourable uncooked mixture before baking — it sets into the final product in the oven.'} },
+  'toothpick test': { zh:{term:'竹籤測試',def:'將竹籤插入中心，取出無沾黏即表示熟透；若沾有濕麵糊，再烤幾分鐘。'}, en:{term:'toothpick test',def:'Insert a toothpick into the centre — clean means done; wet batter means a few more minutes.'} },
+  'soft peaks':     { zh:{term:'濕性發泡',def:'打發蛋白或鮮奶油，尖端彎曲而非直立。通常是打發奶油的中間階段。'}, en:{term:'soft peaks',def:'Whipped cream or egg whites where the tip curls over rather than standing straight — the midpoint of whipping.'} },
+  cream:            { zh:{term:'打發奶油',def:'將奶油與糖攪打至顏色變淡、體積膨脹，充入空氣讓糕點更蓬鬆。'}, en:{term:'cream',def:'Beat butter and sugar together until pale and fluffy — the trapped air makes baked goods lighter.'} },
+  blanch:           { zh:{term:'汆燙',def:'食材放入沸水中短暫煮，再立刻撈起放入冰水，保留色澤與脆度。'}, en:{term:'blanch',def:'Briefly boil then immediately cool in ice water — preserves colour and texture.'} },
+  saute:            { zh:{term:'炒/煎',def:'用少量油在高溫下快速翻炒食材，讓表面焦香。'}, en:{term:'sauté',def:'Cook quickly in a little oil over high heat to develop flavour and a light golden surface.'} },
+  deglaze:          { zh:{term:'收汁',def:'在熱鍋中倒入液體（如酒或高湯），溶解鍋底焦香物，增加醬汁風味。'}, en:{term:'deglaze',def:'Add liquid to a hot pan to lift the browned bits from the bottom — those bits are packed with flavour.'} },
+  zest:             { zh:{term:'果皮屑',def:'用細磨板刮下柑橘類外層薄皮，只取色澤部分，避免白色苦皮。'}, en:{term:'zest',def:'Finely grated outer peel of citrus — only the coloured part, not the white pith which is bitter.'} },
+};
+
+function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+function wrapGloss(html) {
+  const terms = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
+  return html.split(/(<[^>]+>)/).map((part, i) => {
+    if (i % 2 === 1) return part;
+    for (const term of terms) {
+      const rx = new RegExp(`\\b${escapeRegex(term)}\\b`, 'gi');
+      part = part.replace(rx, `<span class="gloss" data-term="${term}">$&</span>`);
+    }
+    return part;
+  }).join('');
+}
+
+// ── SUBSTITUTIONS ──
+const SUBS = {
+  milk:     [ {name:{zh:'植物奶',en:'Plant milk'},         note:{zh:'杏仁奶、燕麥奶皆可',en:'Almond or oat milk work great'}, ratio:'1:1'},
+              {name:{zh:'豆漿',en:'Soy milk'},              note:{zh:'最接近牛奶的替代',en:'Closest to dairy milk'},            ratio:'1:1'},
+              {name:{zh:'優格（稀釋）',en:'Yogurt (thinned)'}, note:{zh:'加等量水稀釋後使用',en:'Mix with equal water first'}, ratio:'1:1'} ],
+  oil:      [ {name:{zh:'融化奶油',en:'Melted butter'},     note:{zh:'風味更豐富',en:'Richer flavour'},                         ratio:'1:1'},
+              {name:{zh:'蘋果醬',en:'Applesauce'},           note:{zh:'降低油脂、增加濕潤',en:'Lowers fat, adds moisture'},      ratio:'1:1'},
+              {name:{zh:'融化椰子油',en:'Coconut oil'},      note:{zh:'輕微椰香',en:'Slight coconut note'},                    ratio:'1:1'} ],
+  eggs:     [ {name:{zh:'亞麻蛋',en:'Flax egg'},            note:{zh:'1 tbsp亞麻籽粉＋3 tbsp水，靜置5分鐘',en:'1 tbsp ground flax + 3 tbsp water, rest 5 min'}, ratio:'per egg'},
+              {name:{zh:'香蕉泥',en:'Mashed banana'},        note:{zh:'增甜、增密度',en:'Adds sweetness and density'},          ratio:'¼ cup'},
+              {name:{zh:'奇亞蛋',en:'Chia egg'},             note:{zh:'1 tbsp奇亞籽＋3 tbsp水',en:'1 tbsp chia + 3 tbsp water'}, ratio:'per egg'} ],
+  sugar:    [ {name:{zh:'楓糖漿',en:'Maple syrup'},         note:{zh:'減少15%用量，風味更深',en:'Use 15% less; deeper flavour'}, ratio:'¾'},
+              {name:{zh:'蜂蜜',en:'Honey'},                  note:{zh:'減少20%用量，甜度更高',en:'Use 20% less; sweeter'},       ratio:'¾'},
+              {name:{zh:'椰糖',en:'Coconut sugar'},          note:{zh:'等量替換，GI值較低',en:'1:1 swap, lower GI'},             ratio:'1:1'} ],
+  flour:    [ {name:{zh:'全麥麵粉',en:'Whole wheat flour'}, note:{zh:'口感略重、更有麥香',en:'Denser, nuttier flavour'},         ratio:'1:1'},
+              {name:{zh:'杏仁粉（部分）',en:'Almond flour (partial)'}, note:{zh:'最多替換¼量，增加濕潤',en:'Replace up to ¼, adds moisture'}, ratio:'up to ¼'},
+              {name:{zh:'燕麥麵粉',en:'Oat flour'},          note:{zh:'等量替換，質地稍軟',en:'1:1, slightly softer crumb'},     ratio:'1:1'} ],
+  oats:     [ {name:{zh:'燕麥片（磨碎）',en:'Rolled oats (blended)'}, note:{zh:'攪拌機打成粉即可代替',en:'Blend rolled oats into flour yourself'}, ratio:'1:1'},
+              {name:{zh:'米粉',en:'Rice flour'},              note:{zh:'無麩質，口感較輕',en:'Gluten-free, lighter texture'},    ratio:'1:1'} ],
+  walnuts:  [ {name:{zh:'山核桃（碎）',en:'Pecans (chopped)'}, note:{zh:'風味更甜，相似口感',en:'Sweeter, similar texture'},    ratio:'1:1'},
+              {name:{zh:'南瓜籽',en:'Pumpkin seeds'},          note:{zh:'無堅果過敏替代',en:'Nut-free alternative'},              ratio:'1:1'},
+              {name:{zh:'省略',en:'Omit'},                    note:{zh:'無需替代，直接省略即可',en:'Simply leave them out — works fine'}, ratio:''} ],
+  raisins:  [ {name:{zh:'蔓越莓乾',en:'Dried cranberries'}, note:{zh:'酸甜風味對比',en:'Tart-sweet contrast'},                  ratio:'1:1'},
+              {name:{zh:'巧克力豆',en:'Chocolate chips'},    note:{zh:'甜度更高，孩子喜愛',en:'Sweeter, kid-favourite'},         ratio:'1:1'},
+              {name:{zh:'藍莓乾',en:'Dried blueberries'},    note:{zh:'風味清甜',en:'Light, fruity'},                            ratio:'1:1'} ],
+  banana:   [ {name:{zh:'南瓜泥',en:'Pumpkin purée'},       note:{zh:'等量替換，秋季風味',en:'1:1 swap, earthy autumnal flavour'}, ratio:'1:1'},
+              {name:{zh:'蘋果醬',en:'Applesauce'},           note:{zh:'甜度稍低，需補糖',en:'Less sweet, add a little extra sugar'}, ratio:'1:1'},
+              {name:{zh:'地瓜泥',en:'Sweet potato purée'},   note:{zh:'濃郁甜味，色澤金黃',en:'Rich sweetness, golden colour'}, ratio:'1:1'} ],
+  vanilla:  [ {name:{zh:'杏仁精',en:'Almond extract'},      note:{zh:'量減半，風味更強烈',en:'Use half the amount — more intense'}, ratio:'½'},
+              {name:{zh:'肉桂粉',en:'Cinnamon'},             note:{zh:'省略香草，略增肉桂量',en:'Skip vanilla and bump cinnamon slightly'}, ratio:'—'},
+              {name:{zh:'楓糖漿',en:'Maple syrup'},          note:{zh:'增加甜度同時添香',en:'Adds both flavour and a little sweetness'}, ratio:'1 tsp'} ],
+  cinnamon: [ {name:{zh:'肉豆蔻',en:'Nutmeg'},              note:{zh:'量減半，風味更辛辣',en:'Use half — more pungent'},          ratio:'½'},
+              {name:{zh:'南瓜派香料',en:'Pumpkin spice'},    note:{zh:'等量替換，複合香氣',en:'1:1, a blend of warm spices'},      ratio:'1:1'},
+              {name:{zh:'省略',en:'Omit'},                    note:{zh:'直接省略，原味更清淡',en:'Simply omit for a plainer muffin'}, ratio:''} ],
+  bsoda:    [ {name:{zh:'泡打粉（3倍量）',en:'Baking powder (3× amount)'}, note:{zh:'1 tsp小蘇打≈3 tsp泡打粉',en:'1 tsp baking soda ≈ 3 tsp baking powder'}, ratio:'3×'},
+              {name:{zh:'省略（少量可）',en:'Omit (limited)'}, note:{zh:'少量時可省略，蓬鬆度稍降',en:'Acceptable in small amounts — slightly denser result'}, ratio:''} ],
+  bpowder:  [ {name:{zh:'小蘇打（⅓量）',en:'Baking soda (⅓ amount)'}, note:{zh:'需有酸性食材才能活化',en:'Needs an acid ingredient (yogurt, buttermilk) to activate'}, ratio:'⅓'},
+              {name:{zh:'省略（少量可）',en:'Omit (limited)'}, note:{zh:'少量可省，成品較密實',en:'Acceptable in small amounts — denser result'}, ratio:''} ],
+};
+
+// ── STEP DIFFICULTY ──
+const STEP_DIFF_LABELS = {
+  'easy':      { zh:'✓ 輕鬆', en:'✓ Easy' },
+  'watch-out': { zh:'⚠ 注意', en:'⚠ Watch Out' },
+  'tricky':    { zh:'⚡ 挑戰', en:'⚡ Tricky' },
+};
+const STEP_DIFF_TIPS = {
+  'easy':      { zh:'這個步驟照說明做即可，沒有特別需要注意的地方。', en:"Follow the instructions and you're good — no special technique needed." },
+  'watch-out': { zh:'這個步驟需要注意細節，請特別留意說明中的提示。',   en:'Details matter here — read the instruction carefully before you start.' },
+  'tricky':    { zh:'這個步驟有難度，初學者可能需要多練習幾次才能掌握。', en:"Takes some practice — don't worry if your first attempt isn't perfect." },
+};
+
 const STEPS = [
   {
-    num:1,
+    num:1, difficulty:'easy',
     title:{ zh:'混合濕性材料', en:'Mix Wet Ingredients' },
     instruction:{ zh:'在大碗中，將所有濕性材料一起攪拌均勻至完全融合。', en:'In a large bowl, whisk all wet ingredients together until fully combined.' },
     ings:[ {key:'milk',emoji:'🥛'},{key:'oil',emoji:'🫒'},{key:'eggs',emoji:'🥚'},{key:'sugar',emoji:'🟫'},{key:'salt',emoji:'🧂'},{key:'vanilla',emoji:'🍶'} ]
   },
   {
-    num:2,
+    num:2, difficulty:'easy',
     title:{ zh:'混合乾性材料', en:'Mix Dry Ingredients' },
     instruction:{ zh:'在另一個碗中，將所有乾性材料混合均勻。', en:'In a separate bowl, whisk together all dry ingredients until evenly combined.' },
     ings:[ {key:'oats',emoji:'🌾'},{key:'flour',emoji:'🌾'},{key:'bsoda',emoji:'🥄'},{key:'bpowder',emoji:'🥄'},{key:'cinnamon',emoji:'🍂'} ]
   },
   {
-    num:3,
+    num:3, difficulty:'watch-out',
     title:{ zh:'混合濕乾材料', en:'Combine Wet & Dry' },
     instruction:{ zh:'將濕性材料倒入乾性材料中，輕輕拌勻即可。<strong>不要過度攪拌！</strong>', en:'Pour wet into dry. Fold gently until just combined. <strong>Do not overmix!</strong>' },
     ings:[]
   },
   {
-    num:4,
+    num:4, difficulty:'watch-out',
     title:{ zh:'加入香蕉', en:'Add Banana' },
     instruction:{ zh:'將搗碎的香蕉<strong>分批</strong>輕輕拌入麵糊中，每次加入一部分後稍微拌勻再繼續，避免麵糊過濕或攪拌過度。', en:'Fold the mashed banana into the batter <strong>in batches</strong> — add a portion at a time, gently folding after each addition to keep the batter from becoming too wet or overmixed.' },
     ings:[ {key:'banana',emoji:'🍌'} ]
   },
   {
-    num:5,
+    num:5, difficulty:'easy',
     title:{ zh:'加入配料', en:'Add Mix-ins' },
     instruction:{ zh:'輕輕拌入核桃和葡萄乾。', en:'Gently fold in the walnuts and raisins.' },
     ings:[ {key:'walnuts',emoji:'🌰'},{key:'raisins',emoji:'🍇'} ]
   },
   {
-    num:6,
+    num:6, difficulty:'easy',
     title:{ zh:'填入模具', en:'Fill the Mold' },
     instruction:{
       zh: () => `將麵糊均勻倒入 <strong>${state.qty} 個${TYPES[state.type].label}</strong> 中。`,
@@ -1285,7 +1508,7 @@ const STEPS = [
     ings:[]
   },
   {
-    num:7,
+    num:7, difficulty:'easy',
     title:{ zh:'烘烤', en:'Bake' },
     instruction:{ zh:'放入已預熱至 <strong>350°F（180°C）</strong> 的烤箱，烘烤至竹籤插入中心取出無沾黏即可。', en:'Bake in a preheated oven at <strong>350°F (180°C)</strong> until a toothpick inserted in the center comes out clean.' },
     ings:[], bake:true
@@ -1387,7 +1610,10 @@ function applyLang() {
   if (uploadSub) uploadSub.textContent = isEn ? 'AI analysis with encouragement · JPG / PNG' : 'AI 自動分析並給予鼓勵 · JPG / PNG';
   const navBack = document.getElementById('nav-back-label');
   if (navBack) navBack.textContent = isEn ? 'All Recipes' : '所有食譜';
+  const printBtnLabel = document.getElementById('print-btn-label');
+  if (printBtnLabel) printBtnLabel.textContent = isEn ? 'Print Recipe' : '列印食譜';
   updateKeyStatus();
+  updateMadeBtn();
 }
 
 function renderNotes() {
@@ -1913,6 +2139,7 @@ function renderIngredients() {
       const attrs = inSelectMode
         ? `class="ing-card${have?' have':''} selectable" onclick="toggleHave('${ing.key}')"`
         : `class="ing-card"`;
+      const hasSubs = !!SUBS[ing.key];
       html += `
         <div ${attrs}>
           ${inSelectMode ? `<div class="ing-card-check">${have ? ICONS.check : ''}</div>` : ''}
@@ -1920,6 +2147,7 @@ function renderIngredients() {
           <div class="ing-name">${ingName(ing.key)}</div>
           <div class="ing-cup">${m.cup}</div>
           <div class="ing-weight">${m.weight}</div>
+          ${!inSelectMode && hasSubs ? `<button class="sub-btn" onclick="event.stopPropagation();showSubsPopover('${ing.key}',this)" title="${isEn?'Substitutions':'替代食材'}">⇄</button>` : ''}
         </div>`;
     });
     html += `</div></div>`;
@@ -2034,8 +2262,95 @@ function getShoppingText() {
 
 function printShopping() {
   document.querySelectorAll('.print-only').forEach(el => el.style.display = 'block');
+  document.body.classList.add('printing-shopping');
   window.print();
+  document.body.classList.remove('printing-shopping');
   document.querySelectorAll('.print-only').forEach(el => el.style.display = 'none');
+}
+
+// ── SUBSTITUTION POPOVER ──
+function showSubsPopover(key, btn) {
+  const subs = SUBS[key]; if (!subs) return;
+  const pop = document.getElementById('subs-popover');
+  const isEn = lang === 'en';
+  document.getElementById('subs-popover-title').textContent =
+    isEn ? `Substitutions for ${ingName(key)}` : `${ingName(key)} 的替代食材`;
+  document.getElementById('subs-popover-body').innerHTML = subs.map(s => `
+    <div class="sub-item">
+      <div class="sub-name">${s.name[lang]}${s.ratio ? `<span class="sub-ratio">${s.ratio}</span>` : ''}</div>
+      <div class="sub-note">${s.note[lang]}</div>
+    </div>`).join('');
+  const card = btn.closest('.ing-card');
+  const r = card.getBoundingClientRect();
+  const popW = 300, margin = 8;
+  let left = r.left;
+  left = Math.max(margin, Math.min(left, window.innerWidth - popW - margin));
+  pop.style.display = 'block';
+  const popH = pop.offsetHeight;
+  const spaceBelow = window.innerHeight - r.bottom - margin;
+  const top = spaceBelow > popH ? r.bottom + 6 : r.top - popH - 6;
+  pop.style.left = left + 'px';
+  pop.style.top  = Math.max(margin, top) + 'px';
+}
+function hideSubsPopover() {
+  const pop = document.getElementById('subs-popover');
+  if (pop) pop.style.display = 'none';
+}
+
+// ── I MADE THIS ──
+const MADE_KEY = 'landie-made-muffins';
+const CONFETTI_COLORS = ['#C4956A','#A8B5A0','#5C4033','#E8D5BE','#D4DDCF','#FAD384','#f4a460'];
+
+function getMadeData() {
+  try { return JSON.parse(localStorage.getItem(MADE_KEY)); } catch { return null; }
+}
+function handleMadeBtn() {
+  if (getMadeData()) {
+    localStorage.removeItem(MADE_KEY);
+  } else {
+    localStorage.setItem(MADE_KEY, JSON.stringify({ date: new Date().toISOString() }));
+    fireConfetti();
+  }
+  updateMadeBtn();
+}
+function updateMadeBtn() {
+  const data = getMadeData();
+  const btn   = document.getElementById('made-btn');
+  const label = document.getElementById('made-label');
+  const icon  = document.getElementById('made-icon');
+  const dateEl = document.getElementById('made-date');
+  if (!btn) return;
+  const isEn = lang === 'en';
+  if (data) {
+    btn.classList.add('made-done');
+    icon.textContent  = '✓';
+    label.textContent = isEn ? 'Made it!' : '已完成！';
+    const d = new Date(data.date);
+    dateEl.textContent = (isEn ? 'Made on ' : '完成於 ') + d.toLocaleDateString(isEn ? 'en-US' : 'zh-TW');
+    dateEl.style.display = 'block';
+  } else {
+    btn.classList.remove('made-done');
+    icon.textContent  = '🎉';
+    label.textContent = isEn ? 'I Made This!' : '我做了！';
+    dateEl.style.display = 'none';
+  }
+}
+function fireConfetti() {
+  for (let i = 0; i < 64; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    const size = 6 + Math.random() * 8;
+    el.style.cssText = [
+      `left:${Math.random()*100}vw`,
+      `background:${CONFETTI_COLORS[Math.floor(Math.random()*CONFETTI_COLORS.length)]}`,
+      `animation-delay:${Math.random()*0.5}s`,
+      `animation-duration:${0.9+Math.random()*1.1}s`,
+      `width:${size}px`, `height:${size}px`,
+      `border-radius:${Math.random()>0.5?'50%':'3px'}`,
+    ].join(';');
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
 }
 
 async function shareShopping() {
@@ -2084,15 +2399,19 @@ function render() {
     card.className = 'step-card';
     card.style.animationDelay = `${idx * 0.07}s`;
 
+    const diffLabel = STEP_DIFF_LABELS[step.difficulty]?.[lang] || '';
+    const diffTip   = STEP_DIFF_TIPS[step.difficulty]?.[lang] || '';
+    const rawInstr  = typeof step.instruction[lang] === 'function' ? step.instruction[lang]() : step.instruction[lang];
     let html = `
       <div class="step-header">
         <div class="step-num">${step.num}</div>
-        <div>
+        <div style="flex:1">
           <div class="step-title-text">${step.title[lang]}</div>
           <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${step.title[isEn?'zh':'en']}</div>
         </div>
+        <span class="step-diff-pill ${step.difficulty}" data-tip="${diffTip}">${diffLabel}</span>
       </div>
-      <div class="step-instruction">${typeof step.instruction[lang] === 'function' ? step.instruction[lang]() : step.instruction[lang]}</div>
+      <div class="step-instruction">${wrapGloss(rawInstr)}</div>
     `;
 
     if (step.bake) {
@@ -2174,7 +2493,50 @@ render();
 updateFontBtns();
 renderGallery();
 updateKeyStatus();
+updateMadeBtn();
+
+// ── GLOSSARY TOOLTIP INIT ──
+(function() {
+  const tip = document.getElementById('gloss-tooltip');
+  function show(el) {
+    const g = GLOSSARY[el.dataset.term]; if (!g) return;
+    tip.innerHTML = `
+      <div class="gloss-term-zh">${g.zh.term}</div>
+      <div class="gloss-term-en">${g.en.term}</div>
+      <div class="gloss-def-zh">${g.zh.def}</div>
+      <div class="gloss-def-en">${g.en.def}</div>`;
+    const r = el.getBoundingClientRect();
+    const w = 280, margin = 8;
+    let left = r.left + r.width / 2 - w / 2;
+    left = Math.max(margin, Math.min(left, window.innerWidth - w - margin));
+    tip.style.left = left + 'px';
+    tip.style.top  = (r.bottom + 8) + 'px';
+    tip.style.display = 'block';
+  }
+  function hide() { tip.style.display = 'none'; }
+  document.addEventListener('mouseover', e => { const g = e.target.closest('.gloss'); if (g) show(g); });
+  document.addEventListener('mouseout',  e => { if (!e.target.closest('.gloss')) hide(); });
+  document.addEventListener('click', e => {
+    const g = e.target.closest('.gloss');
+    if (g) { show(g); return; }
+    if (!e.target.closest('#subs-popover') && !e.target.closest('.sub-btn')) hideSubsPopover();
+    hide();
+  });
+  document.addEventListener('scroll', hide, true);
+})();
 </script>
+
+<!-- GLOSSARY TOOLTIP -->
+<div id="gloss-tooltip" style="display:none"></div>
+
+<!-- SUBSTITUTION POPOVER -->
+<div id="subs-popover" class="subs-popover" style="display:none">
+  <div class="subs-popover-head">
+    <span id="subs-popover-title" class="subs-popover-title"></span>
+    <button class="subs-close-btn" onclick="hideSubsPopover()">✕</button>
+  </div>
+  <div id="subs-popover-body"></div>
+</div>
 
 <!-- FULLSCREEN TIMER OVERLAY -->
 <div class="timer-fullscreen" id="timer-fullscreen" onclick="minimizeTimer()">
