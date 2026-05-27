@@ -590,11 +590,11 @@
   /* ── GLOSSARY ── */
   .gloss { border-bottom: 1.5px dotted var(--oat-dark); cursor: help; display: inline; }
   #gloss-tooltip {
-    position: fixed; z-index: 600;
+    position: fixed; z-index: 9998;
     background: var(--card-bg); border: 1px solid var(--oat-light);
     border-radius: var(--radius-sm); box-shadow: 0 8px 32px rgba(92,64,51,0.18);
     padding: 14px 16px; max-width: 280px; pointer-events: none;
-    animation: fadeUp 0.18s ease;
+    display: none; opacity: 0;
   }
   .gloss-term-zh { font-size: 13px; font-weight: 600; color: var(--brown); margin-bottom: 1px; }
   .gloss-term-en { font-size: 11px; color: var(--text-muted); margin-bottom: 7px; font-style: italic; }
@@ -2220,8 +2220,10 @@ function changeFontSize(dir) {
 }
 
 function updateFontBtns() {
-  document.getElementById('font-dec').disabled = (fontSize === 0);
-  document.getElementById('font-inc').disabled = (fontSize === FONT_SIZES.length - 1);
+  const decBtn = document.getElementById('font-dec');
+  const incBtn = document.getElementById('font-inc');
+  if (decBtn) decBtn.disabled = (fontSize === 0);
+  if (incBtn) incBtn.disabled = (fontSize === FONT_SIZES.length - 1);
   for (let i = 0; i < FONT_SIZES.length; i++) {
     const d = document.getElementById('fdot-' + i);
     if (d) d.classList.toggle('active', i === fontSize);
@@ -3379,25 +3381,34 @@ function _glossShow(el) {
     `<div class="gloss-term-en">${g.en.term}</div>` +
     `<div class="gloss-def-zh">${g.zh.def}</div>` +
     `<div class="gloss-def-en">${g.en.def}</div>`;
+  // Show and position
+  t.style.display = 'block';
+  t.style.opacity = '1';
   const r = el.getBoundingClientRect();
-  const w = 280, margin = 8;
+  const margin = 8, w = 280;
   let left = r.left + r.width / 2 - w / 2;
   left = Math.max(margin, Math.min(left, window.innerWidth - w - margin));
-  t.style.display = 'block';
+  t.style.left = left + 'px';
   const h = t.offsetHeight;
   const spaceBelow = window.innerHeight - r.bottom - margin;
   const top = spaceBelow >= h ? r.bottom + 8 : r.top - h - 8;
-  t.style.left = left + 'px';
-  t.style.top  = Math.max(margin, top) + 'px';
+  t.style.top = Math.max(margin, top) + 'px';
 }
 function _glossHide() {
-  const t = document.getElementById('gloss-tooltip'); if (t) t.style.display = 'none';
+  const t = document.getElementById('gloss-tooltip');
+  if (!t) return;
+  t.style.opacity = '0';
+  t.style.display = 'none';
 }
 document.addEventListener('mouseover', function(e) {
   const g = e.target.closest('.gloss'); if (g) _glossShow(g);
 });
 document.addEventListener('mouseout', function(e) {
-  if (!e.target.closest('.gloss')) _glossHide();
+  // e.target is the element being left — only hide if mouse is truly leaving .gloss
+  const from = e.target.closest('.gloss');
+  if (!from) return;
+  const to = e.relatedTarget;
+  if (!to || !to.closest('.gloss')) _glossHide();
 });
 document.addEventListener('click', function(e) {
   const g = e.target.closest('.gloss');
@@ -3419,25 +3430,20 @@ document.addEventListener('scroll', _glossHide, true);
     if (!tip) return;
     clearTimeout(hideTimer);
     popup.textContent = tip;
-    popup.style.opacity = '0';
+    // Position while invisible, then show
+    popup.style.removeProperty('opacity');
     popup.style.display = 'block';
-    // Position: above the pill, right-aligned
     const rect = pill.getBoundingClientRect();
-    const zoom = parseFloat(document.body.style.zoom) || 1;
-    requestAnimationFrame(() => {
-      const ph = popup.offsetHeight;
-      const pw = popup.offsetWidth;
-      let top = rect.top - ph - 10;
-      let left = rect.right - pw;
-      // Keep inside viewport
-      if (left < 8) left = 8;
-      if (top < 8) top = rect.bottom + 10; // flip below if not enough space above
-      popup.style.top  = top  + 'px';
-      popup.style.left = left + 'px';
-      // Flip arrow if tooltip moved below
-      popup.style.setProperty('--arrow-top', top < rect.top ? '100%' : '0%');
-      popup.classList.add('visible');
-    });
+    const ph = popup.offsetHeight;
+    const pw = popup.offsetWidth;
+    let top  = rect.top - ph - 10;
+    let left = rect.right - pw;
+    if (left < 8) left = 8;
+    if (top < 8) top = rect.bottom + 10;
+    popup.style.top  = top  + 'px';
+    popup.style.left = left + 'px';
+    popup.style.setProperty('--arrow-top', top < rect.top ? '100%' : '0%');
+    popup.classList.add('visible');
   }
 
   function hideTip() {
@@ -3475,7 +3481,7 @@ document.addEventListener('scroll', _glossHide, true);
 </script>
 
 <!-- GLOSSARY TOOLTIP -->
-<div id="gloss-tooltip" style="display:none"></div>
+<div id="gloss-tooltip"></div>
 
 <!-- SUBSTITUTION POPOVER -->
 <div id="subs-popover" class="subs-popover" style="display:none">
